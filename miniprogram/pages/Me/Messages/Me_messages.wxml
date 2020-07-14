@@ -1,0 +1,9 @@
+<!--miniprogram/pages/Me/Messages/Me_messages.wxml-->
+
+<!-- Navigation Bar Start -->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" title="我的消息"
+  back="{{!navigationbar_show}}" extClassBg="nav">
+</mp-navigation-bar>
+<!-- Navigation Bar End -->
+
+<view class="nogroup">暂无消息</view>

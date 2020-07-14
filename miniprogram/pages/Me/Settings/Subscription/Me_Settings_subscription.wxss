@@ -1,0 +1,13 @@
+/* miniprogram/pages/Me/Settings/Subscription/Me_Settings_subscription.wxss */
+@import '../../../../style/dark_mode.wxss';
+
+.weui-msg__icon-area image {
+  border-radius: 20px;
+  min-width: 300rpx;
+  min-height: 300rpx;
+}
+
+.img {
+  height: 300rpx;
+  width: 300rpx;
+}

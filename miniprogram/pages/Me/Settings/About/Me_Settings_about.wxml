@@ -1,0 +1,22 @@
+<!--miniprogram/pages/Me/Settings/About/Me_Settings_about.wxml-->
+
+<!-- Navigation Bar Start -->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" title="关于邮教有约"
+    back="{{!navigationbar_show}}" extClassBg="nav">
+</mp-navigation-bar>
+<!-- Navigation Bar End -->
+
+<mp-msg icon="/images/Me/gh_370de569963a_344.png" title="邮教有约" ext-class="weui-msg">
+    <view slot="desc" style="{{isSmallScreen?'line-height:0px;':''}}">北京邮电大学教室预约平台</view>
+    <view slot="extend" style="{{isSmallScreen?'':'line-height:30px;'}}">
+        <view>教室借用预约审核</view>
+        <view>课程与空教室查询</view>
+        <view>团体活动自动通知</view>
+    </view>
+    <view slot="footer">
+        <view class="weui-footer__links" style="{{isSmallScreen?'':'line-height:30px;'}}">
+            <button class="weui-cells__tips button" open-type="feedback">用户反馈</button>
+        </view>
+        <view class="weui-footer__text" style="{{isSmallScreen?'':'font-size:16px;'}}">Copyright © 2019-2020 邮教有约</view>
+    </view>
+</mp-msg>

@@ -1,0 +1,21 @@
+<!--miniprogram/pages/Me/UserInfo/UserInfo/Me_Info_info.wxml-->
+
+<!-- Navigation Bar Start -->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" title="更新个人信息"
+  back="{{!navigationbar_show}}" extClassBg="nav">
+</mp-navigation-bar>
+<!-- Navigation Bar End -->
+
+<mp-cells ext-class="my-cells">
+  <mp-cell value="学院" footer="{{schools}}"></mp-cell>
+  <mp-cell value="学院" footer="{{grades}}"></mp-cell>
+  <mp-cell value="班级" footer="{{classes}}"></mp-cell>
+  <view slot="footer" class="weui-cells__tips" style="font-size: 16px;">如果您的信息有误，请
+    <button class="weui-cells__tips button" open-type="feedback">点此提交反馈</button> ，反馈过程中请选择“其他异常”，详细注明您的
+    <text style="font-weight:700;color:#F76260">学院及班级</text> 信息，我们会在核实后及时修改，由此给您带来的不便敬请谅解！</view>
+</mp-cells>
+
+<mp-dialog title="网络异常" show="{{showCheckNetworkDialog}}" bindbuttontap="tapDialogButton" buttons="{{OneButton}}">
+  <view>未能成功更新用户信息数据</view>
+  <view>请再试一次</view>
+</mp-dialog>

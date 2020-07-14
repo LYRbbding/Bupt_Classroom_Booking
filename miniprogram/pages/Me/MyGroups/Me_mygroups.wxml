@@ -1,0 +1,67 @@
+<!--miniprogram/pages/Me/MyGroups/Me_mygroups.wxml-->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" loading="{{showLoading}}"
+  title="我的团体" back="{{!navigationbar_show}}" extClassBg="nav">
+  <mp-icon slot="right" type="outline" icon="add" size="{{25}}" bindtap="addgroup" ext-class="nav-btn"></mp-icon>
+</mp-navigation-bar>
+
+<mp-loading duration="{{900}}" ext-class="demo0" type="dot-gray" show="{{showLoading}}" animated="{{true}}">
+</mp-loading>
+<view class="nogroup" wx:if="{{nogroup}}">{{nogroup_text}}</view>
+
+<view wx:if="{{classes}}">
+  <block wx:if="{{!PCmode}}">
+    <mp-cells title="{{classes_title}}">
+      <mp-cell wx:for="{{classes_array}}" hover title="{{item.group_name}}" id="{{item._id}}" bindtap="GoToGroup"
+        ext-class="{{item.new_group?'groups-new':''}}">
+        <image slot="icon" wx:if="{{item.group_image!='/images/group.png'||item.group_image_text==''}}"
+          src="{{item.group_image}}"
+          style="border-radius: 5px;margin-right: 16px;vertical-align: middle;width:30px; height: 30px;"></image>
+        <view slot="icon" wx:else style="background-color:{{item.group_image_color}}" class="group-image">
+          {{item.group_image_text}}</view>
+      </mp-cell>
+    </mp-cells>
+  </block>
+  <block wx:else>
+    <view class="weui-cells__title">{{classes_title}}</view>
+    <view class="weui-grids my-grids">
+      <view wx:for="{{classes_array}}" class="weui-grid grid-five" id="{{item._id}}" bindtap="GoToGroup">
+        <view style="margin-bottom:10px;text-align:center;">
+          <image wx:if="{{item.group_image!='/images/group.png'||item.group_image_text==''}}" src="{{item.group_image}}"
+            style="border-radius: 10px;vertical-align: middle;width:48px; height: 48px;"></image>
+          <view wx:else style="background-color:{{item.group_image_color}}" class="group-image-PC">
+            {{item.group_image_text}}</view>
+        </view>
+        <view class="weui-grid__label grid-title">{{item.group_name}}</view>
+      </view>
+    </view>
+  </block>
+</view>
+
+<view wx:if="{{associations}}">
+  <block wx:if="{{!PCmode}}">
+    <mp-cells title="{{associations_title}}">
+      <mp-cell wx:for="{{associations_array}}" hover title="{{item.group_name}}" id="{{item._id}}" bindtap="GoToGroup"
+        ext-class="{{item.new_group?'groups-new':''}}">
+        <image slot="icon" wx:if="{{item.group_image!='/images/group.png'||item.group_image_text==''}}"
+          src="{{item.group_image}}"
+          style="border-radius: 5px;margin-right: 16px;vertical-align: middle;width:30px; height: 30px;"></image>
+        <view slot="icon" wx:else style="background-color:{{item.group_image_color}}" class="group-image">
+          {{item.group_image_text}}</view>
+      </mp-cell>
+    </mp-cells>
+  </block>
+  <block wx:else>
+    <view class="weui-cells__title">{{associations_title}}</view>
+    <view class="weui-grids my-grids">
+      <view wx:for="{{associations_array}}" class="weui-grid grid-five" id="{{item._id}}" bindtap="GoToGroup">
+        <view style="margin-bottom:10px;text-align:center;">
+          <image wx:if="{{item.group_image!='/images/group.png'||item.group_image_text==''}}" src="{{item.group_image}}"
+            style="border-radius: 10px;vertical-align: middle;width:48px; height: 48px;"></image>
+          <view wx:else style="background-color:{{item.group_image_color}}" class="group-image-PC">
+            {{item.group_image_text}}</view>
+        </view>
+        <view class="weui-grid__label grid-title">{{item.group_name}}</view>
+      </view>
+    </view>
+  </block>
+</view>

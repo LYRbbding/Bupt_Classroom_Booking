@@ -1,0 +1,4 @@
+/* miniprogram/pages/Me/MyGroups/GroupDetails/Me_Groups_privacy.wxss */
+@import '../../../../style/btn_2.wxss';
+@import '../../../../style/dark_mode.wxss';
+@import '../../../../style/nav_color.wxss';

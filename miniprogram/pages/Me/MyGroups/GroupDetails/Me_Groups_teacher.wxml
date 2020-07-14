@@ -1,0 +1,43 @@
+<!--miniprogram/pages/Me/MyGroups/GroupDetails/Me_Groups_teacher.wxml-->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" loading="{{navigationbar_loading}}"
+  title="{{navigation_background=='#ee5253'?'辅导员':'指导教师'}}管理" color="#F7F7F7" extClassBg="{{navigation_background}}">
+</mp-navigation-bar>
+
+<view class="page-body">
+  <block wx:if="{{teacherItems!=''}}">
+    <mp-cells>
+      <mp-slideview wx:for="{{teacherItems}}" buttons="{{slideButtons}}" bindbuttontap="removeTeacher"
+        data-idx="{{index}}" data-openid="{{item._openid}}">
+        <mp-cell>
+          <image slot="icon"
+            style="border-radius: 10px;margin-right: 16px;vertical-align: middle;width:60px; height: 60px;"
+            src="{{item.avatarUrl}}"></image>
+          <view style="font-size:20px;line-height:32px;margin-bottom: 6px;">{{item.realname}}</view>
+          <view class="weui-cell__ft weui-cell__ft_in-access"
+            style="text-align:left;font-size:14px;white-space:nowrap;">{{item.department}} {{item.post}}</view>
+        </mp-cell>
+      </mp-slideview>
+    </mp-cells>
+
+    <view style="height:100px"> </view>
+  </block>
+  <block wx:else>
+    <view class="nonew">{{nonew}}</view>
+  </block>
+</view>
+
+<mp-dialog title="{{navigation_background=='#ee5253'?'辅导员':'指导教师'}}删除确认" show="{{dialogRemoveTeacherShow}}"
+  bindbuttontap="tapDialogRemoveTeacherButton" buttons="{{buttons}}">
+  <view>您确定要将<view style="font-weight:700">{{name_temp}} {{navigation_background=='#ee5253'?'辅导员':'老师'}}</view>从团体中移除吗？
+  </view>
+</mp-dialog>
+
+<view class="fab-btn {{button_color=='#ff6b6b'?'fab-red':(button_color=='#54a0ff'?'fab-blue':'fab-green')}}"
+  bindtap="addTeacher"
+  hover-class="{{button_color=='#ff6b6b'?'fab-red-hover':(button_color=='#54a0ff'?'fab-blue-hover':'fab-green-hover')}}">
+  <mp-icon icon="add" type="field" size="{{30}}" color="#fff"></mp-icon>
+</view>
+<view>
+  <view class="fab-tip fab-ani">扫描{{navigation_background=='#ee5253'?'辅导员':'指导教师'}}二维码</view>
+  <image class="fab-tipr fab-ani" src="/images/Me/bubble-side.png"></image>
+</view>

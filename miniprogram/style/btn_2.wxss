@@ -1,0 +1,18 @@
+.fun-btn {
+  display:flex;
+  flex-basis: 45%;
+  flex-grow:0;
+  flex-shrink:0;
+  width: 45%;
+  min-width: 45%;
+}
+
+#button {
+  display:flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  margin-top: 10%;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 90%;
+}

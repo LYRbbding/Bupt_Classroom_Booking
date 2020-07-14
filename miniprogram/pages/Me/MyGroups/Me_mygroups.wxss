@@ -1,0 +1,63 @@
+/* miniprogram/pages/Me/MyGroups/Me_mygroups.wxss */
+@import '../../../style/dark_mode.wxss';
+
+.nav-btn {
+  background: var(--weui-FG);
+}
+
+.nogroup {
+  color: #7E7E7E;
+  margin: 5% auto;
+  text-align: center;
+}
+
+.demo0 {
+  height: 60px;
+}
+
+.group-image {
+  border-radius: 5px;
+  margin-right: 16px;
+  vertical-align: middle;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+  font-size: 20px;
+  font-weight: 500;
+  color: #ecf0f1;
+  text-align: center;
+}
+
+.groups-new {
+  background-color: rgba(255, 234, 167, 0.5);
+}
+
+.my-grids {
+  background-color: var(--weui-BG-2);
+}
+
+.grid-title {
+  font-size: 16px;
+}
+
+.group-image-PC {
+  border-radius: 10px;
+  vertical-align: middle;
+  width: 48px;
+  height: 48px;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+  font-size: 28px;
+  font-weight: 500;
+  color: #ecf0f1;
+  text-align: center;
+}
+
+.grid-five {
+  width: 20%;
+}

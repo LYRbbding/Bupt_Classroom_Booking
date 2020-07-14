@@ -1,0 +1,65 @@
+/* miniprogram/pages/Me/IdentityAuthentication/Authorize/Me_Auth_auth.wxss */
+@import '../../../../style/btn_2_fixed.wxss';
+@import '../../../../style/dark_mode.wxss';
+
+page {
+  --color-warn: #D84E43;
+}
+
+@media(prefers-color-scheme:light) {
+  page {
+    --color-warn: #D84E43;
+  }
+}
+
+@media(prefers-color-scheme:dark) {
+  page {
+    --color-warn: #F76260;
+  }
+}
+
+button {
+  white-space: nowrap;
+}
+
+.title {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.desc {
+  font-size: 0.8em;
+  color: var(--color-warn);
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 1.5%;
+}
+
+.desc2 {
+  color: #7b7b7b;
+}
+
+.fun-btn {
+  display: flex;
+  flex-basis: 30%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 30%;
+  min-width: 30%;
+}
+
+.button {
+  background-color: rgba(0, 0, 0, 0);
+  color: #1aad19;
+  min-height: auto;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+  line-height: 1;
+  border-radius: 0;
+  font-weight: 700;
+  font-size: 16px;
+  background: initial;
+  position: initial;
+  display: inline;
+}

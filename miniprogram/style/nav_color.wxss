@@ -1,0 +1,26 @@
+Page {
+  --color-nav-red:#EE5253;
+  --color-nav-blue:#2E86DE;
+  --color-nav-green:#10AC84;
+}
+
+@media (prefers-color-scheme: light) {
+  Page {
+    --color-nav-red:#EE5253;
+    --color-nav-blue:#2E86DE;
+    --color-nav-green:#10AC84;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  Page {
+    --color-nav-red:#EE5253;
+    --color-nav-blue:#2E86DE;
+    --color-nav-green:#10AC84;
+  }
+}
+
+.nav-color-default{background-color:var(--weui-BG-0);}
+.nav-color-red{background-color:var(--color-nav-red);}
+.nav-color-blue{background-color:var(--color-nav-blue);}
+.nav-color-green{background-color:var(--color-nav-green);}

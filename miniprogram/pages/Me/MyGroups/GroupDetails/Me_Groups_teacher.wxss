@@ -1,0 +1,80 @@
+/* miniprogram/pages/Me/MyGroups/GroupDetails/Me_Groups_teacher.wxss */
+@import '../../../../style/dark_mode.wxss';
+@import '../../../../style/nav_color.wxss';
+
+.nonew {
+  color: #7E7E7E;
+  margin: 5% auto;
+  text-align: center;
+}
+
+.fab-btn {
+  position: fixed;
+  border-radius: 30px;
+  padding: 15px;
+  right: 20px;
+  bottom: 50px;
+}
+
+.fab-tip {
+  position: fixed;
+  background: #ddd;
+  color: #000;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 12.5px;
+  padding: 5px 12.5px;
+  right: 96px;
+  bottom: 60px;
+}
+
+.fab-tipr {
+  position: fixed;
+  height: 16px;
+  width: 8px;
+  right: 88px;
+  bottom: 72px;
+}
+
+.fab-ani {
+  animation-name: hide;
+  animation-duration: 0.25s;
+  animation-timing-function: ease;
+  animation-delay: 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.fab-red {
+  background: #ff6b6b;
+}
+
+.fab-blue {
+  background: #54a0ff;
+}
+
+.fab-green {
+  background: #1dd1a1;
+}
+
+.fab-red-hover {
+  background: #ee5253;
+}
+
+.fab-blue-hover {
+  background: #2e86de;
+}
+
+.fab-green-hover {
+  background: #10ac84;
+}
+
+@keyframes hide {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

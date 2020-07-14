@@ -1,0 +1,17 @@
+.my-cells-QR:before{top:0;border-top:0rpx solid rgba(0,0,0,.1)}.my-cells-QR:after{content:" ";position:absolute;left:0;right:0;height:0px;color:rgba(0,0,0,.1)}.my-cells-QR:before{content:" ";position:absolute;left:0;right:0;height:0px;color:rgba(0,0,0,.1)}.my-cells-QR:after{bottom:0;border-bottom:0rpx solid rgba(0,0,0,.1)}
+
+.QR-Code-box {
+  position: fixed;
+  width: 320px;
+  height: 450px;
+  border-radius: 20px;
+  background-color:var(--weui-BG-2);
+}
+
+.QR-Code {
+  padding-left: 16px;
+  padding-right: 16px;
+  height: 288px;
+  width: 288px;
+  background-color:var(--weui-BG-2);
+}

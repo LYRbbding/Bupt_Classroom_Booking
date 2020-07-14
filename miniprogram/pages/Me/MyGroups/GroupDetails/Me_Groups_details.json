@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "my-cells": "../../../../components/cells2/cells",
+    "my-sidebar": "../../../../components/sidebar/sidebar"
+  },
+  "navigationBarTextStyle": "white",
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "团体信息"
+}

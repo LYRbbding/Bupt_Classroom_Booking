@@ -1,0 +1,70 @@
+/* miniprogram/pages/Query/Query.wxss */
+@import '../../style/dark_mode.wxss';
+@import '../../style/colors.wxss';
+
+.column {
+  width: 20%;
+}
+
+.box {
+  overflow: hidden;
+  border: thin solid var(--weui-FG-1);
+  border-radius: 10px;
+  padding: 6px;
+  text-align: center;
+  height: 90px;
+  font-size: 12px;
+}
+
+.time {
+  border: medium solid var(--weui-FG-1);
+  border-radius: 10px;
+  text-align: center;
+  font-size: 24px;
+  height: 45px;
+  line-height: 45px;
+  opacity: 0.5;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+
+.normal-a {
+  background: var(--color-aaa);
+}
+
+.normal-b {
+  background: var(--color-bbb);
+}
+
+.normal-c {
+  background: var(--color-ccc);
+}
+
+.normal-d {
+  background: var(--color-ddd);
+}
+
+.normal-e {
+  background: var(--color-eee);
+}
+
+.hover-a {
+  background: var(--color-aaa-h);
+}
+
+.hover-b {
+  background: var(--color-bbb-h);
+}
+
+.hover-c {
+  background: var(--color-ccc-h);
+}
+
+.hover-d {
+  background: var(--color-ddd-h);
+}
+
+.hover-e {
+  background: var(--color-eee-h);
+}

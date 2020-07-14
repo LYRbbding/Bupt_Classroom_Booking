@@ -1,0 +1,43 @@
+<!--miniprogram/pages/Me/UserInfo/Contacts/Me_Info_Con.wxml-->
+
+<!-- Navigation Bar Start -->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" title="更新个人信息"
+  back="{{!navigationbar_show}}" extClassBg="nav">
+</mp-navigation-bar>
+<!-- Navigation Bar End -->
+
+<view class="page-section">
+  <mp-form id="form" rules="{{rules}}" models="{{formData}}">
+    <mp-cells title="联系方式">
+      <mp-cell prop="mobile" title="手机号" ext-class="">
+        <input class="weui-input" style="min-width:100%" type="number" maxlength="11" bindinput="phonenumber"
+          value="{{phonenumber}}" data-field="mobile" placeholder="请输入您的手机号" />
+      </mp-cell>
+      <mp-cell prop="email" title="邮箱" ext-class="">
+        <input class="weui-input" style="min-width:100%" bindinput="mailbox" value="{{mailbox}}" data-field="email"
+          placeholder="请输入您的邮箱" />
+      </mp-cell>
+      <mp-cell title="QQ" ext-class="">
+        <input class="weui-input" style="min-width:100%" type="number" maxlength="10" bindinput="qqid" value="{{qqid}}"
+          placeholder="请输入您的QQ" />
+      </mp-cell>
+      <mp-cell title="微信号" ext-class="">
+        <input class="weui-input" style="min-width:100%" bindinput="wxid" value="{{wxid}}" placeholder="请输入您的微信号" />
+      </mp-cell>
+    </mp-cells>
+  </mp-form>
+  <view class="weui-cells__tips" style="font-size:1.1em;color:#E00000">{{error}}</view>
+</view>
+
+<view id="button">
+  <view class="fun-btn">
+    <button class="weui-btn" type="primary" id="but_Save" bindtap="UpdateInfo" loading="{{SaveLoading}}"
+      disabled="{{SubmitDisabled}}">保存</button>
+  </view>
+  <view class="fun-btn"><button class="weui-btn" type="default" id="but_Back" bindtap="GoBack">取消</button></view>
+</view>
+
+<mp-dialog title="网络异常" show="{{showCheckNetworkDialog}}" bindbuttontap="tapDialogButton" buttons="{{OneButton}}">
+  <view>未能成功更新用户信息数据</view>
+  <view>请再试一次</view>
+</mp-dialog>

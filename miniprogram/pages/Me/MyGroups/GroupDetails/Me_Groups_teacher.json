@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "mp-slideview": "../../../../components/slideview/slideview"
+  },
+  "navigationBarTextStyle": "white",
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "教师管理"
+}

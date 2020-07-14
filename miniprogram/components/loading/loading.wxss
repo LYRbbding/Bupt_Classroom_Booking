@@ -1,0 +1,16 @@
+page{--color-c:rgba(0,0,0,.3);--color-b:rgba(0,0,0,.1);--color-a:rgba(0,0,0,.5);--ani-c:h 1.6s step-start infinite;--ani-b:g 1.6s step-start infinite;--ani-a:i 1.6s step-start infinite;}
+@media (prefers-color-scheme: dark){page{--color-c:hsla(0,0%,100%,.3);--color-b:hsla(0,0%,100%,.5);--color-a:hsla(0,0%,100%,.1);--ani-c:k 1.6s step-start infinite;--ani-b:j 1.6s step-start infinite;--ani-a:l 1.6s step-start infinite;}}
+.wx_loading_view{display:flex;justify-content:center;align-items:center;overflow:hidden}.loading{color:rgba(255,255,255,0.9);font-size:17px;text-align:center}.loading_view_translation{transition:height .2s .3s ease}
+.wx_dot_loading_gray{background-color:var(--color-c);-webkit-animation:var(--ani-c);animation:var(--ani-c)}.wx_dot_loading_gray:before{background-color:var(--color-b);-webkit-animation:var(--ani-b);animation:var(--ani-b)}.wx_dot_loading_gray:after{background-color:var(--color-a);-webkit-animation:var(--ani-a);animation:var(--ani-a)}
+@-webkit-keyframes g{0%,to{background-color:rgba(0,0,0,.1)}30%{background-color:rgba(0,0,0,.5)}60%{background-color:rgba(0,0,0,.3)}}
+@keyframes g{0%,to{background-color:rgba(0,0,0,.1)}30%{background-color:rgba(0,0,0,.5)}60%{background-color:rgba(0,0,0,.3)}}
+@-webkit-keyframes h{0%,to{background-color:rgba(0,0,0,.3)}30%{background-color:rgba(0,0,0,.1)}60%{background-color:rgba(0,0,0,.5)}}
+@keyframes h{0%,to{background-color:rgba(0,0,0,.3)}30%{background-color:rgba(0,0,0,.1)}60%{background-color:rgba(0,0,0,.5)}}
+@-webkit-keyframes i{0%,to{background-color:rgba(0,0,0,.5)}30%{background-color:rgba(0,0,0,.3)}60%{background-color:rgba(0,0,0,.1)}}
+@keyframes i{0%,to{background-color:rgba(0,0,0,.5)}30%{background-color:rgba(0,0,0,.3)}60%{background-color:rgba(0,0,0,.1)}}
+@-webkit-keyframes j{0%,to{background-color:hsla(0,0%,100%,.5)}30%{background-color:hsla(0,0%,100%,.1)}60%{background-color:hsla(0,0%,100%,.3)}}
+@keyframes j{0%,to{background-color:hsla(0,0%,100%,.5)}30%{background-color:hsla(0,0%,100%,.1)}60%{background-color:hsla(0,0%,100%,.3)}}
+@-webkit-keyframes k{0%,to{background-color:hsla(0,0%,100%,.3)}30%{background-color:hsla(0,0%,100%,.5)}60%{background-color:hsla(0,0%,100%,.1)}}
+@keyframes k{0%,to{background-color:hsla(0,0%,100%,.3)}30%{background-color:hsla(0,0%,100%,.5)}60%{background-color:hsla(0,0%,100%,.1)}}
+@-webkit-keyframes l{0%,to{background-color:hsla(0,0%,100%,.1)}30%{background-color:hsla(0,0%,100%,.3)}60%{background-color:hsla(0,0%,100%,.5)}}
+@keyframes l{0%,to{background-color:hsla(0,0%,100%,.1)}30%{background-color:hsla(0,0%,100%,.3)}60%{background-color:hsla(0,0%,100%,.5)}}

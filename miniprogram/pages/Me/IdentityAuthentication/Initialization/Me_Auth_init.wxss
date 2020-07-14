@@ -1,0 +1,2 @@
+/* miniprogram/pages/Me/IdentityAuthentication/Initialization/Me_Auth_init.wxss */
+@import '../../../../style/dark_mode.wxss';

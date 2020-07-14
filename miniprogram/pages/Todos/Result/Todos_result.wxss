@@ -1,0 +1,63 @@
+/* miniprogram/pages/Todos/Result/Todos_result.wxss */
+@import '../../../style/btn_2_fixed.wxss';
+@import '../../../style/dark_mode.wxss';
+
+Page {
+  --color-btnfg: rgba(0, 0, 0, 0.18);
+  --color-btnbg: rgba(250, 250, 250, 1);
+}
+
+@media (prefers-color-scheme:light) {
+  Page {
+    --color-btnfg: rgba(0, 0, 0, 0.18);
+    --color-btnbg: rgba(250, 250, 250, 1);
+  }
+}
+
+@media (prefers-color-scheme:dark) {
+  Page {
+    --color-btnfg: rgba(255, 255, 255, 0.2);
+    --color-btnbg: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.form-item {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  text-align: left;
+  line-height: 36px;
+}
+
+.form-item-title {
+  width: 30%;
+}
+
+.form-item-content {
+  width: 70%;
+  color: var(--weui-FG-1);
+}
+
+.button-hover[type='warning'] {
+  color: #fff;
+  background-color: #E64747;
+}
+
+button[type='warning'] {
+  color: #fff;
+  background-color: #fa5151;
+}
+
+button[disabled][type='warning'] {
+  color: var(--color-btnfg);
+  background-color: var(--color-btnbg);
+}
+
+.fun-btn {
+  display: flex;
+  flex-basis: 45%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 45%;
+  min-width: 45%;
+}

@@ -1,0 +1,158 @@
+/* miniprogram/pages/Me/UserInfo/Me_userinfo.wxss */
+@import '../../../style/dark_mode.wxss';
+@import '../../../style/QRCode_default.wxss';
+
+Page {
+  --color-name: #191919;
+}
+
+@media (prefers-color-scheme:light) {
+  Page {
+    --color-name: #191919;
+  }
+}
+
+@media (prefers-color-scheme:dark) {
+  Page {
+    --color-name: #EEEEEE;
+  }
+}
+
+.weui-cells:before {
+  top: 0;
+  border-top: 0rpx solid #fff
+}
+
+.weui-cells:after {
+  content: " ";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  color: #fff
+}
+
+.weui-cells:before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0px;
+  color: #fff
+}
+
+.weui-cells:after {
+  bottom: 0;
+  border-bottom: 1rpx solid #fff
+}
+
+.title {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.desc {
+  font-size: 0.8em;
+  color: #C00000;
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 1.5%;
+}
+
+.desc2 {
+  color: #7B7B7B;
+}
+
+.fun-btn {
+  display: flex;
+  flex-basis: 45%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 45%;
+  min-width: 45%;
+}
+
+.realname {
+  font-weight: 700;
+  font-size: 1.25em;
+  word-break: break-all;
+  color: var(--color-name);
+}
+
+.identity {
+  color: #ffffff;
+  border-radius: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 7.5px;
+  padding-right: 7.5px;
+  background-color: #bbbbbb;
+}
+
+.mask {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.6);
+  animation-name: opacityon;
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
+  animation-iteration-count: 1;
+}
+
+.mask_hidden {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.6);
+  animation-name: opacityoff;
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.description {
+  font-size: 0.8em;
+  text-align: center;
+  color: #7B7B7B;
+}
+
+.my-grids {
+  background-color: var(--weui-BG-2);
+}
+
+.grid-title {
+  font-size: 16px;
+  line-height: 40px;
+}
+
+.grid-desc {
+  color: var(--weui-FG-1);
+}
+
+.grid-four {
+  width: 25%;
+}
+
+@keyframes opacityon {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes opacityoff {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

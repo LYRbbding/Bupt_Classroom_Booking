@@ -1,0 +1,57 @@
+Page {
+  --color-aa:#1abc9c;
+  --color-bb:#2ecc71;
+  --color-cc:#3498db;
+  --color-dd:#e67e22;
+  --color-ee:#e74c3c;
+  --color-aaa:rgba(26,188,156,.5);
+  --color-bbb:rgba(46,204,113,.5);
+  --color-ccc:rgba(52,152,219,.5);
+  --color-ddd:rgba(230,126,34,.5);
+  --color-eee:rgba(231,76,60,.5);
+  --color-aaa-h:rgba(26,188,156,.7);
+  --color-bbb-h:rgba(46,204,113,.7);
+  --color-ccc-h:rgba(52,152,219,.7);
+  --color-ddd-h:rgba(230,126,34,.7);
+  --color-eee-h:rgba(231,76,60,.7);
+}
+
+@media (prefers-color-scheme: light) {
+  Page {
+    --color-aa:#1abc9c;
+    --color-bb:#2ecc71;
+    --color-cc:#3498db;
+    --color-dd:#e67e22;
+    --color-ee:#e74c3c;
+    --color-aaa:rgba(26,188,156,.5);
+    --color-bbb:rgba(46,204,113,.5);
+    --color-ccc:rgba(52,152,219,.5);
+    --color-ddd:rgba(230,126,34,.5);
+    --color-eee:rgba(231,76,60,.5);
+    --color-aaa-h:rgba(26,188,156,.7);
+    --color-bbb-h:rgba(46,204,113,.7);
+    --color-ccc-h:rgba(52,152,219,.7);
+    --color-ddd-h:rgba(230,126,34,.7);
+    --color-eee-h:rgba(231,76,60,.7);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  Page {
+    --color-aa:#16a085;
+    --color-bb:#27ae60;
+    --color-cc:#2980b9;
+    --color-dd:#d35400;
+    --color-ee:#c0392b;
+    --color-aaa:rgba(22,160,133,.5);
+    --color-bbb:rgba(39,174,96,.5);
+    --color-ccc:rgba(41,128,185,.5);
+    --color-ddd:rgba(211,84,0,.5);
+    --color-eee:rgba(192,57,43,.5);
+    --color-aaa-h:rgba(22,160,133,.7);
+    --color-bbb-h:rgba(39,174,96,.7);
+    --color-ccc-h:rgba(41,128,185,.7);
+    --color-ddd-h:rgba(211,84,0,.7);
+    --color-eee-h:rgba(192,57,43,.7);
+  }
+}

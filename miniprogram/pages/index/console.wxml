@@ -1,0 +1,4 @@
+<!--miniprogram/pages/index/console.wxml-->
+<view wx:for="{{buttons}}" wx:key="text" style="margin-top:5px;margin-bottom:5px;">
+  <button class="weui-btn" type="default" bindtap="Goto" id="{{item.id}}" style="width:450rpx">{{item.text}}</button>
+</view>

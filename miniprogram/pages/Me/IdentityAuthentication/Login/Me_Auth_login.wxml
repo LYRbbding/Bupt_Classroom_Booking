@@ -1,0 +1,52 @@
+<!--miniprogram/pages/Me/IdentityAuthentication/Login/Me_Auth_login.wxml-->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" title="身份认证"
+  back="{{!navigationbar_show}}" extClassBg="nav">
+</mp-navigation-bar>
+
+<view class="page-body">
+  <form bindreset="ResetInput">
+    <!--页面标题开始-->
+    <view class="{{weui_h}} title" style="margin-top: {{marginT}}%">用户授权登录</view>
+    <!--页面标题结束-->
+
+    <!--输入框开始-->
+    <mp-form>
+      <mp-cells title="*请使用学校统一身份认证的账号密码登录,建议在非校园网环境登录">
+        <mp-cell title="用户名">
+          <input class="weui-input" type="number" bindinput="username" placeholder="请输入学工号" />
+        </mp-cell>
+        <mp-cell title="密码">
+          <input class="weui-input" password type="text" bindinput="password" placeholder="请输入统一认证密码" />
+        </mp-cell>
+        <mp-cell wx:if="{{!showCaptcha}}" title="验证码" ext-class="weui-cell_vcode">
+          <input class="weui-input" bindinput="captcha" placeholder="请输入验证码" />
+          <image slot="footer" class="weui-vcode-img" src="{{captcha_file}}" style="width: 128px;height:56px;"></image>
+        </mp-cell>
+      </mp-cells>
+    </mp-form>
+    <!--输入框结束-->
+
+    <!--按钮开始-->
+    <view id="button">
+      <button class="weui-btn" type="primary" id="but_Auth" bindtap="GoToAuth" loading="{{AuthLoading}}"
+        disabled="{{LoginDisabled}}">登录</button>
+      <button class="weui-btn" type="default" id="but_Back" bindtap="GoBack">取消</button>
+      <button class="weui-btn" type="warn" id="but_Reset" formType="reset">重置</button>
+    </view>
+    <!--按钮结束-->
+  </form>
+
+  <!--错误提示开始-->
+  <mp-dialog title="网络异常" show="{{showCheckNetworkDialog}}" bindbuttontap="tapDialogButton" buttons="{{OneButton}}">
+    <view>无法连接到认证服务器</view>
+    <view>请检查网络设置</view>
+  </mp-dialog>
+  <mp-dialog title="登录失败" show="{{showLoginFailDialog}}" bindbuttontap="tapDialogButton" buttons="{{OneButton}}">
+    <view>未能成功连接到服务器</view>
+    <view>请再试一次</view>
+  </mp-dialog>
+  <mp-toptips msg="{{error}}" type="error" show="{{err_status}}"></mp-toptips>
+  <mp-toptips msg="{{info}}" type="info" show="{{inf_status}}"></mp-toptips>
+  <!--错误提示结束-->
+
+</view>

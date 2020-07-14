@@ -1,0 +1,10 @@
+<view class="{{extClass}} weui-cells__group {{outerClass}} {{childClass}}">
+    <mp-sticky offset-top="{{offsetTop}}">
+        <view wx:if="{{title}}" class="my-cells__title">{{title}}</view>
+    </mp-sticky>
+    <view class="weui-cells weui-cells_after-title my-cells-QR {{checkboxCount > 0 && checkboxIsMulti ? 'weui-cells_checkbox' : ''}}">
+        <slot></slot>
+    </view>
+    <view wx:if="{{footer}}" class="weui-cells__tips">{{footer}}</view>
+    <slot name="footer" wx:else></slot>
+</view>

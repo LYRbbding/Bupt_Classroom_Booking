@@ -1,0 +1,17 @@
+var origin_Y = 0
+var sidebar_index = -10
+module.exports = {
+  sidebar_index: sidebar_index,
+  touchstart: function (event, instance) {
+    console.log('log event', JSON.stringify(event))
+    origin_Y = event.changedTouches[0].clientY
+    var characters = '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    var id = event.currentTarget.id.substring(13)
+    id = ((id == 0) ? '#' : id)
+    var flag = characters.indexOf(id)
+  },
+    touchmove: function (event, instance) {
+    event.changedTouches[0].clientY
+    console.log('log event', JSON.stringify(event))
+  }
+}

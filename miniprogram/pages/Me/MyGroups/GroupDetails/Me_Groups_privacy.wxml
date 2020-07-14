@@ -1,0 +1,25 @@
+<!--miniprogram/pages/Me/MyGroups/GroupDetails/Me_Groups_privacy.wxml-->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" title="更改加入方式" color="#F7F7F7"
+  extClassBg="{{navigation_background}}">
+</mp-navigation-bar>
+
+<mp-form id="form">
+  <mp-cells title="团体加入方式">
+    <mp-checkbox-group multi="{{false}}" id="privacy" bindchange="radioChange">
+      <mp-checkbox wx:for="{{privacyItems}}" wx:key="value" label="{{item.name}}" value="{{item.value}}"
+        checked="{{item.checked}}"></mp-checkbox>
+    </mp-checkbox-group>
+  </mp-cells>
+  <mp-cells title="通过团体二维码邀请新成员">
+    <mp-checkbox-group multi="{{false}}" id="qrcode" bindchange="radioChange">
+      <mp-checkbox wx:for="{{qrcodeItems}}" wx:key="value" label="{{item.name}}" value="{{item.value}}"
+        checked="{{item.checked}}"></mp-checkbox>
+    </mp-checkbox-group>
+  </mp-cells>
+</mp-form>
+
+<view id="button">
+  <view class="fun-btn"><button class="weui-btn" type="primary" id="but_Save" bindtap="UpdateInfo"
+      loading="{{SaveLoading}}" disabled="{{SubmitDisabled}}">保存</button></view>
+  <view class="fun-btn"><button class="weui-btn" type="default" id="but_Back" bindtap="GoBack">取消</button></view>
+</view>

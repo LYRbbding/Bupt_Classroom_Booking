@@ -1,0 +1,28 @@
+<!--miniprogram/pages/Me/MyGroups/GroupDetails/Me_Groups_log.wxml-->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" loading="{{navigationbar_loading}}"
+  title="申请记录" color="#F7F7F7" extClassBg="{{navigation_background}}">
+</mp-navigation-bar>
+
+<block wx:if="{{verifiedItems!=''}}">
+  <mp-form id="form">
+    <mp-cells title="待审核成员">
+      <mp-checkbox-group multi="{{true}}" id="verified_members" bindchange="radioChange">
+        <mp-checkbox wx:for="{{verifiedItems}}" wx:key="value" label="{{item.realname}}" value="{{item._openid}}"
+          foot="{{item.department}} {{item.uid}}" checked="{{item.checked}}"></mp-checkbox>
+      </mp-checkbox-group>
+    </mp-cells>
+  </mp-form>
+
+  <view style="height:100px"> </view>
+
+  <view id="button">
+    <view class="fun-btn"><button class="weui-btn" type="primary" bindtap="Accept" loading="{{AcceptLoading}}"
+        disabled="{{SubmitDisabled}}">同意</button></view>
+    <view class="fun-btn"><button class="weui-btn" type="warning" bindtap="Refuse" loading="{{RefuseLoading}}"
+        disabled="{{SubmitDisabled}}">拒绝</button></view>
+  </view>
+  <view id="footer-img"></view>
+</block>
+<block wx:else>
+  <view class="nonew">{{nonew}}</view>
+</block>

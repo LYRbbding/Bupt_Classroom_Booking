@@ -1,0 +1,32 @@
+<!--miniprogram/pages/Me/Settings/Subscription/Me_Settings_subscription.wxml-->
+
+<!-- Navigation Bar Start -->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" title="获取推送权限"
+  back="{{!navigationbar_show}}" extClassBg="nav">
+</mp-navigation-bar>
+<!-- Navigation Bar End -->
+
+<block wx:if="{{!(PCmode||updateVersion)}}">
+  <mp-msg title="当前状态: {{status=='reject'?'未订阅':(status=='partial'?'部分订阅':(status=='accept'?'全部订阅':'未知'))}}"
+    type="{{status=='reject'?'warn':(status=='partial'?'info':(status=='accept'?'success':'waiting'))}}">
+    <view slot="desc">
+      <view>为保证您能正常接收活动消息推送，请允许“邮教有约”小程序使用微信消息订阅权限。请先单击“获取推送权限”，在弹出的窗口中勾选全部消息推送模块，并勾选“总是保持以上选择”</view>
+    </view>
+    <view slot="extend">
+      <image src="/images/Me/getSubscription.jpg" style="width:100%;border-radius:10px;" mode="widthFix"></image>
+      <view>如果未弹出窗口，请点击“前往授权设置”，打开“消息订阅”，勾选“接收消息订阅”，并选择所有消息订阅权限</view>
+    </view>
+    <view slot="handle">
+      <button class="weui-btn" type="primary" bindtap="auth">获取推送权限</button>
+      <button class="weui-btn" type="default" open-type="openSetting">前往授权设置</button>
+    </view>
+  </mp-msg>
+
+  <mp-toptips msg="{{error}}" type="error" show="{{error_status}}"></mp-toptips>
+  <mp-toptips msg="{{success}}" type="success" show="{{success_status}}"></mp-toptips>
+</block>
+
+<block wx:else>
+  <view wx:if="{{PCmode}}" class="weui-msg weui-msg__desc">电脑版微信小程序不支持此功能，请用手机打开“邮教有约”小程序。</view>
+  <view wx:else class="weui-msg weui-msg__desc">当前微信APP版本过低，不支持此功能，请升级至最新版微信后使用。</view>
+</block>

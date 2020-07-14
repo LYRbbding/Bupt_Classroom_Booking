@@ -1,0 +1,73 @@
+<!--miniprogram/pages/Me/MyGroups/CreateGroup/Me_Groups_create.wxml-->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" title="创建团体"
+  back="{{!navigationbar_show}}" extClassBg="nav">
+</mp-navigation-bar>
+
+<mp-form id="form" rules="{{rules}}" models="{{formData}}">
+  <mp-cells title="团体类型">
+    <mp-checkbox-group prop="radio" multi="{{false}}" bindchange="radioChange">
+      <mp-checkbox wx:for="{{radioItems}}" wx:key="value" label="{{item.name}}" value="{{item.value}}"
+        checked="{{item.checked}}"></mp-checkbox>
+    </mp-checkbox-group>
+  </mp-cells>
+
+  <mp-cells title="团体基本信息" footer="以上信息填写后仍可修改">
+    <mp-cell prop="name" ext-class="">
+      <view slot="title" class="weui-label {{unavailable?'alert':''}}">名称{{unavailable?'不可用':''}}</view>
+      <input bindfocus="name_focus" bindinput="name_input" bindblur="name_blur" data-field="name" class="weui-input"
+        placeholder="请输入团体名称" />
+      <mp-icon wx:if="{{available}}" slot="footer" type="outline" icon="done2" color="#1AAD19" style="margin-right:4px;"
+        size="{{20}}"></mp-icon>
+      <mp-icon wx:if="{{unavailable}}" slot="footer" type="outline" icon="close2" color="#E64340"
+        style="margin-right:4px;" size="{{20}}"></mp-icon>
+      <view wx:if="{{namechecking}}" slot="footer" class="weui-loading" style="width:20px;height:20px;"></view>
+    </mp-cell>
+    <mp-cell link value="头像" bindtap="photo">
+      <image slot="footer" src="{{profile_photo}}"
+        style="border-radius: 10px;margin-right: 16px;vertical-align: middle;width:80px; height: 80px;"></image>
+    </mp-cell>
+    <view class="weui-cell" hidden="{{showDialog}}">
+      <view class="weui-cell__bd">
+        <textarea class="weui-textarea" placeholder="团体简介，不超过200个字符" style="min-height: 3.3em" maxlength="-1"
+          auto-height="true" bindinput="textarea_input" bindblur="textarea_blur" />
+        <view class="weui-textarea-counter {{textarea_count>200?'alert':''}}">{{textarea_count}}/200</view>
+      </view>
+    </view>
+  </mp-cells>
+</mp-form>
+
+<view class="weui-cells__tips" style="height:100px;font-size:1.1em;color:#E00000">{{error}}</view>
+
+<view id="button">
+  <view class="fun-btn">
+    <button class="weui-btn" type="primary" bindtap="CreateGroup" loading="{{SaveLoading}}">保存</button>
+  </view>
+  <view class="fun-btn"><button class="weui-btn" type="default" bindtap="GoBack">取消</button></view>
+</view>
+<view id="footer-img"></view>
+
+<mp-halfScreenDialog bindbuttontap="photoDialog" closabled="{{false}}" show="{{showDialog}}"
+                     maskClosable="{{false}}" title="选取团体头像" buttons="{{buttons}}">
+  <view slot="desc">
+    <view class="weui-half-screen-dialog__desc">从QQ获取头像<text class="weui-half-screen-dialog__tips alert"
+          style="font-weight:500;line-height:1">{{alert}}</text></view>
+    <radio-group class="radio-group radio2" bindchange="qqradioChange">
+        <radio class="radio fun-radio" wx:for-items="{{qq_items}}" wx:key="name" value="{{item.name}}" checked="{{item.checked}}">
+            <text>{{item.value}}</text>
+        </radio>
+    </radio-group>
+    <mp-cells title=" ">
+      <mp-cell>
+        <image slot="icon" src="{{preview_photo}}"
+               style="border-radius: 10px;margin-right: 16px;vertical-align: middle;width:40px; height: 40px;"></image>
+        <input bindfocus="profile_photo_focus" bindinput="profile_photo_input" bindblur="profile_photo_blur"
+               type="number" maxlength="10" class="weui-input" placeholder="请输入{{qq_type=='group'?'QQ群':'个人QQ'}}号"/>
+        <mp-icon wx:if="{{exist}}" slot="footer" type="outline" icon="done2" color="#1AAD19"
+                 style="margin-right:4px;" size="{{20}}"></mp-icon>
+        <mp-icon wx:if="{{unexist}}" slot="footer" type="outline" icon="close2" color="#E64340"
+                 style="margin-right:4px;" size="{{20}}"></mp-icon>
+        <view wx:if="{{photochecking}}" slot="footer" class="weui-loading" style="width:20px;height:20px;"></view>
+      </mp-cell>
+    </mp-cells>
+  </view>
+</mp-halfScreenDialog>

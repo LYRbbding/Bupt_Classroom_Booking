@@ -1,0 +1,34 @@
+/* miniprogram/pages/Me/MyGroups/CreateGroup/Me_Groups_create.wxss */
+@import '../../../../style/btn_2_fixed.wxss';
+@import '../../../../style/dark_mode.wxss';
+
+.alert {
+  color: #E00000;
+}
+
+.fun-radio {
+  display: flex;
+  flex-basis: 45%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 45%;
+  min-width: 45%;
+}
+
+.radio2 {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 90%;
+}
+
+.fun-btn {
+  display: flex;
+  flex-basis: 45%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 45%;
+  min-width: 45%;
+}

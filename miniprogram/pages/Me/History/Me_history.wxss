@@ -1,0 +1,23 @@
+/* miniprogram/pages/Me/History/Me_history.wxss */
+@import '../../../style/dark_mode.wxss';
+@import '../../../style/colors.wxss';
+
+.todos-content-title {
+  font-weight: 700;
+}
+
+.todos-item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+
+.todos-content {
+  flex-grow: 1;
+  line-height: 30px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

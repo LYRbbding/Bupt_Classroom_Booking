@@ -1,0 +1,24 @@
+<!--miniprogram/pages/Query/Query_detail.wxml-->
+
+<!-- Navigation Bar Start -->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" loading="{{loading}}" title="课程详情"
+  back="{{!navigationbar_show}}" extClassBg="nav">
+</mp-navigation-bar>
+<!-- Navigation Bar End -->
+
+<mp-cells title="{{classroom}}教室 {{day}}{{section}} 课程详情">
+  <mp-cell wx:for="{{detail}}">
+    <view wx:if="{{item.course!='已被借用'}}" class="detail-item">
+      <view class="detail-content" style="padding-right:32px;color:var(--color-bb);"><text
+          class="detail-content-title">课程名称：</text>{{item.course}}</view>
+      <view class="detail-content" style="padding-right:32px;color:var(--color-cc);"><text
+          class="detail-content-title">上课班级：</text>{{item.classes}}</view>
+      <view class="detail-content" style="padding-right:32px;color:var(--color-dd);"><text
+          class="detail-content-title">授课教师：</text>{{item.teacher}}</view>
+      <view class="detail-content" style="padding-right:32px;color:var(--color-ee);"><text
+          class="detail-content-title">周次：</text>{{item.week_display}}</view>
+    </view>
+    <view wx:else class="detail-content" style="font-weight:700;color:var(--color-aa);">{{item.week_display}}
+      {{item.course}}</view>
+  </mp-cell>
+</mp-cells>

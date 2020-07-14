@@ -1,0 +1,29 @@
+page {--background-footer: linear-gradient(to top, #f6f6f6 ,rgba(246,246,246,1),rgba(246,246,246,0.8), rgba(246,246,246,0));}
+@media (prefers-color-scheme: light) {page {--background-footer: linear-gradient(to top, #f6f6f6 ,rgba(246,246,246,1),rgba(246,246,246,0.8), rgba(246,246,246,0));}}
+@media (prefers-color-scheme: dark) {page {--background-footer: linear-gradient(to top, #282828 ,rgba(40,40,40,1),rgba(40,40,40,0.8), rgba(40,40,40,0));}}
+
+
+#button {
+  display: flex;
+  flex-direction: row-reverse;
+  position: fixed;
+  justify-content: space-between;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 90%;
+  bottom: 5%;
+  z-index: 11;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+#footer-img {
+  position: fixed;
+  width: 100%;
+  height: 100px;
+  bottom: 0%;
+  z-index: 10;
+  background: var(--background-footer);
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}

@@ -1,0 +1,37 @@
+<!--miniprogram/pages/Query/Query.wxml-->
+
+<!-- Navigation Bar Start -->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" loading="{{loading}}" title="查询结果"
+  back="{{!navigationbar_show}}" extClassBg="nav">
+</mp-navigation-bar>
+<!-- Navigation Bar End -->
+
+<view class="weui-cells__title">{{classroom}}教室 课程安排</view>
+<view style="display:flex;margin:4px;">
+  <view class="column" wx:for="{{result_array_morning}}" wx:for-item="column" wx:for-index="column_idx">
+    <view wx:for="{{column.array}}" class="box {{column.color}}" hover-class="{{column.hover}}" wx:for-item="row"
+      wx:for-index="row_idx" id="R{{row_idx}}C{{column_idx}}" bindtap="showDetails">
+      <text>{{row}}</text>
+    </view>
+  </view>
+</view>
+<view class="time" style="background:var(--weui-BLUE)">午　　休</view>
+<view style="display:flex;margin:4px;">
+  <view class="column" wx:for="{{result_array_afternoon}}" wx:for-item="column" wx:for-index="column_idx">
+    <view wx:for="{{column.array}}" class="box {{column.color}}" hover-class="{{column.hover}}" wx:for-item="row"
+      wx:for-index="row_idx" id="R{{row_idx+5}}C{{column_idx}}" bindtap="showDetails">
+      <text>{{row}}</text>
+    </view>
+  </view>
+</view>
+<view class="time" style="background:var(--weui-BLUE)">晚　　饭</view>
+<view style="display:flex;margin:4px;">
+  <view class="column" wx:for="{{result_array_evening}}" wx:for-item="column" wx:for-index="column_idx">
+    <view wx:for="{{column.array}}" class="box {{column.color}}" hover-class="{{column.hover}}" wx:for-item="row"
+      wx:for-index="row_idx" id="R{{row_idx+11}}C{{column_idx}}" bindtap="showDetails">
+      <text>{{row}}</text>
+    </view>
+  </view>
+</view>
+
+<mp-toptips msg="{{info}}" type="info" show="{{inf_status}}"></mp-toptips>

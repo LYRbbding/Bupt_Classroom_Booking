@@ -1,0 +1,23 @@
+<!--miniprogram/pages/Me/MyGroups/AddGroup/Me_groups_add.wxml-->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" title="加入团体"
+  back="{{!navigationbar_show}}" extClassBg="nav">
+</mp-navigation-bar>
+<mp-cells id="brief">
+  <mp-cell>
+    <image wx:if="{{image!='/images/group.png'||image_text==''}}" slot="icon" src="{{image}}"
+      class="{{image=='/images/group.png'?'default-image':''}}"
+      style="border-radius: 10px;margin-right: 16px;vertical-align: middle;width:80px; height: 80px;"></image>
+    <view slot="icon" wx:else style="background-color:{{image_color}}" class="group-image">{{image_text}}</view>
+    <view class="title">{{name}}</view>
+    <view slot="footer" class="footer">{{type}}</view>
+  </mp-cell>
+  <mp-cell style="height:auto" value="{{description}}"></mp-cell>
+</mp-cells>
+
+<view style="height:100px;"></view>
+
+<view id="button">
+  <button class="weui-btn" type="primary" bindtap="AddGroup" loading="{{AddLoading}}">
+    {{(privacy=='01'||privacy=='11')?'申请':''}}加入团体</button>
+</view>
+<view id="footer-img"></view>

@@ -1,0 +1,129 @@
+<!--miniprogram/pages/Me/UserInfo/Me_userinfo.wxml-->
+
+<!-- Navigation Bar Start -->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" loading="{{navigation_loading}}"
+  title="个人信息" back="{{!navigationbar_show}}" extClassBg="nav">
+</mp-navigation-bar>
+<!-- Navigation Bar End -->
+
+<view class="page-body">
+
+  <!-- User Info Start -->
+  <mp-cells ext-class="my-cells">
+    <mp-cell link value="头像" bindtap="photo">
+      <image slot="footer" src="{{profile_photo}}"
+        style="border-radius: 10px;margin-right: 16px;vertical-align: middle;width:80px; height: 80px;"></image>
+    </mp-cell>
+    <block wx:if="{{!PCmode}}">
+      <mp-cell value="姓名" footer="{{realname}}"></mp-cell>
+      <mp-cell value="学工号" footer="{{uid}}"></mp-cell>
+      <mp-cell value="身份" footer="{{identity == 'student' ? '学生' : 'post'}}"></mp-cell>
+    </block>
+  </mp-cells>
+
+  <view class="weui-grids my-grids" wx:if="{{PCmode}}">
+    <view class="weui-grid">
+      <view class="weui-grid__label grid-title">姓名</view>
+      <view class="weui-grid__label grid-desc">{{realname}}</view>
+    </view>
+    <view class="weui-grid">
+      <view class="weui-grid__label grid-title">学工号</view>
+      <view class="weui-grid__label grid-desc">{{uid}}</view>
+    </view>
+    <view class="weui-grid">
+      <view class="weui-grid__label grid-title">身份</view>
+      <view class="weui-grid__label grid-desc">{{identity == 'student' ? '学生' : 'post'}}</view>
+    </view>
+  </view>
+
+  <view wx:if="{{identity == 'student'}}">
+    <block wx:if="{{!PCmode}}">
+      <mp-cells ext-class="my-cells" title=" ">
+        <mp-cell link hover value="学院" footer="{{schools}}" bindtap="userInfo"></mp-cell>
+        <mp-cell link hover value="年级" footer="{{grades}}" bindtap="userInfo"></mp-cell>
+        <mp-cell link hover value="班级" footer="{{classes}}" bindtap="userInfo"></mp-cell>
+      </mp-cells>
+
+      <mp-cells ext-class="my-cells" title=" ">
+        <mp-cell link hover value="手机号" footer="{{phonenumber}}" bindtap="contacts"></mp-cell>
+        <mp-cell link hover value="邮箱" footer="{{mailbox}}" bindtap="contacts"></mp-cell>
+        <mp-cell link hover value="QQ" footer="{{qqid}}" bindtap="contacts"></mp-cell>
+        <mp-cell link hover value="微信号" footer="{{wxid}}" bindtap="contacts"></mp-cell>
+      </mp-cells>
+    </block>
+
+
+    <block wx:else>
+      <view style="height:16px;"></view>
+      <view class="weui-grids my-grids" bindtap="userInfo">
+        <view class="weui-grid">
+          <view class="weui-grid__label grid-title">学院</view>
+          <view class="weui-grid__label grid-desc">{{schools}}</view>
+        </view>
+        <view class="weui-grid">
+          <view class="weui-grid__label grid-title">年级</view>
+          <view class="weui-grid__label grid-desc">{{grades}}</view>
+        </view>
+        <view class="weui-grid">
+          <view class="weui-grid__label grid-title">班级</view>
+          <view class="weui-grid__label grid-desc">{{classes}}</view>
+        </view>
+      </view>
+
+      <view style="height:16px;"></view>
+      <view class="weui-grids my-grids" bindtap="contacts">
+        <view class="weui-grid grid-four">
+          <view class="weui-grid__label grid-title">手机号</view>
+          <view class="weui-grid__label grid-desc">{{phonenumber==''?'未填写':phonenumber}}</view>
+        </view>
+        <view class="weui-grid grid-four">
+          <view class="weui-grid__label grid-title">邮箱</view>
+          <view class="weui-grid__label grid-desc">{{mailbox==''?'未填写':mailbox}}</view>
+        </view>
+        <view class="weui-grid grid-four">
+          <view class="weui-grid__label grid-title">QQ</view>
+          <view class="weui-grid__label grid-desc">{{qqid==''?'未填写':qqid}}</view>
+        </view>
+        <view class="weui-grid grid-four">
+          <view class="weui-grid__label grid-title">微信号</view>
+          <view class="weui-grid__label grid-desc">{{wxid==''?'未填写':wxid}}</view>
+        </view>
+      </view>
+    </block>
+
+  </view>
+
+  <view wx:else>
+    <mp-cells ext-class="my-cells" title=" ">
+      <mp-cell link hover value="我的二维码" bindtap="qrcode">
+        <mp-icon slot="footer" style="vertical-align: baseline;" type="field" icon="qr-code" color="#808080"
+          size="{{24}}"></mp-icon>
+      </mp-cell>
+    </mp-cells>
+  </view>
+  <!-- User Info End -->
+
+  <!-- Error Start -->
+  <mp-toptips msg="{{success}}" type="success" show="{{success_status}}"></mp-toptips>
+  <!-- Error End -->
+
+</view>
+
+<!-- QR Code Start -->
+<view wx:if="{{mask}}" class="{{mask_shown?'mask':'mask_hidden'}}" bindtap="HideMask">
+  <view class="QR-Code-box" style="left:{{margin}}px;right:{{margin}}px;top:{{padding+60}}px;bottom:{{padding}}px">
+    <view style="margin-top:20px;">
+      <mp-cells ext-class="my-cells">
+        <mp-cell>
+          <image slot="icon" src="{{profile_photo}}"
+            style="border-radius: 10px;margin-right: 16px;vertical-align: middle;width:48px; height: 48px;"></image>
+          <view class="realname">{{realname}}</view>
+          <view slot="footer" class="identity">{{identity == 'student' ? '学生' : post}}</view>
+        </mp-cell>
+      </mp-cells>
+    </view>
+    <image class="QR-Code" src="{{qrCodeImg}}"></image>
+    <view class="description">单击空白处关闭二维码</view>
+  </view>
+</view>
+<!-- QR Code End -->

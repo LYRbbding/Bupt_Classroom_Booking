@@ -1,0 +1,20 @@
+{
+  "light": {
+      "navBgColor": "#eeeeee",
+      "navTxtStyle": "black",
+      "navTxtStyleRev": "white",
+      "bgColor": "#f6f6f6",
+      "bgTxtStyle": "light",
+      "bgColorTop": "#eeeeee",
+      "bgColorBottom": "#efefef"
+  },
+  "dark": {
+      "navBgColor": "#191919",
+      "navTxtStyle": "white",
+      "navTxtStyleRev": "black",
+      "bgColor": "#282828",
+      "bgTxtStyle": "dark",
+      "bgColorTop": "#191919",
+      "bgColorBottom": "#1f1f1f"
+  }
+}

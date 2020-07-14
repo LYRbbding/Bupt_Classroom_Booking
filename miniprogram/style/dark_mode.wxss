@@ -1,0 +1,26 @@
+:root {
+  color-scheme: light dark;
+}
+
+Page {
+  --color-bg:#F6F6F6;
+  --color-fr:#000;
+  background-color: var(--color-bg);
+  color: var(--color-fr);
+}
+
+@media (prefers-color-scheme: light) {
+  Page {
+    --color-bg:#F6F6F6;
+    --color-fr:#000;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  Page {
+    --color-bg: #282828;
+    --color-fr: #FFF;
+  }
+}
+
+.nav{background-color:var(--weui-BG-0);}

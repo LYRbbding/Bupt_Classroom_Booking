@@ -1,0 +1,14 @@
+/* miniprogram/pages/Me/UserInfo/Avatar/Me_Info_ava.wxss */
+@import '../../../../style/default_avatar.wxss';
+@import '../../../../style/dark_mode.wxss';
+
+.weui-msg__icon-area image {
+  border-radius: 20px;
+  min-width: 300rpx;
+  min-height: 300rpx;
+}
+
+.img {
+  height: 300rpx;
+  width: 300rpx;
+}

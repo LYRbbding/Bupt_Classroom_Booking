@@ -1,0 +1,16 @@
+<!--miniprogram/pages/Me/IdentityAuthentication/Initialization/Me_Auth_init.wxml-->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" title="身份认证"
+  back="{{!navigationbar_show}}" extClassBg="nav">
+</mp-navigation-bar>
+
+<view class="page">
+  <mp-msg type="info" size="96" title="身份认证提示">
+    <view slot="desc">通过用户认证后，我们可以确认您的身份，分配相应的权限，以便您进行教室
+      <text style="font-weight:700;color:#E00000;">预约、审批、管理</text>等操作，同时可以
+      <text style="font-weight:700;color:#E00000;">接收到与您相关的消息提醒</text>。</view>
+    <view slot="handle" id="button">
+      <button class="weui-btn" type="primary" id="but_Auth" loading="{{AuthLoading}}" bindtap="GoToAuth">身份认证</button>
+      <button class="weui-btn" type="default" id="but_Back" bindtap="GoBack">取消认证</button>
+    </view>
+  </mp-msg>
+</view>

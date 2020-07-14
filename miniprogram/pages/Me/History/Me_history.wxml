@@ -1,0 +1,25 @@
+<!--miniprogram/pages/Me/History/Me_history.wxml-->
+
+<!-- Navigation Bar Start -->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" title="活动历史"
+  back="{{!navigationbar_show}}" extClassBg="nav">
+</mp-navigation-bar>
+<!-- Navigation Bar End -->
+
+
+<mp-cells>
+  <mp-cell hover wx:for="{{arrayFinish}}" id="{{item._id}}" bindtap="GoToApplicationResult">
+    <view class="todos-item">
+      <view class="todos-content" style="min-width: 360px;color:var(--color-aa);"><text
+          class="todos-content-title">日期：</text>{{item.date_start}} 至 {{item.date_end}}</view>
+      <view class="todos-content" style="min-width: 200px;color:var(--color-bb);"><text
+          class="todos-content-title">时间：</text>{{item.time_start}} 至 {{item.time_end}}</view>
+      <view class="todos-content" style="min-width: 200px;color:var(--color-cc);"><text
+          class="todos-content-title">主办：</text>{{item.activity_group}}</view>
+      <view class="todos-content" style="min-width: 360px;color:var(--color-dd);"><text
+          class="todos-content-title">地点：</text>{{item.classroom_school}} {{item.classroom}}</view>
+      <view class="todos-content" style="min-width: 200px;color:var(--color-ee);"><text
+          class="todos-content-title">主题：</text>{{item.activity_name}}</view>
+    </view>
+  </mp-cell>
+</mp-cells>

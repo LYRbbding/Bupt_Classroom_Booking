@@ -1,0 +1,402 @@
+<!--miniprogram/pages/Me/MyGroups/GroupDetails/Me_Groups_details.wxml-->
+
+<!-- Navigation Bar Start -->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" title="团体信息" color="#F7F7F7"
+  loading="{{navigation_loading||index_delete!=-1}}" extClassBg="{{navigation_background}}">
+  <mp-icon wx:if="{{privacy=='00'||privacy=='01'||admins_mode>=5}}" slot="right" type="outline" icon="qr-code"
+    color="#F7F7F7" size="{{25}}" bindtap="qrcode"></mp-icon>
+  <view wx:else slot="right" style="width:25px;"></view>
+</mp-navigation-bar>
+<!-- Navigation Bar End -->
+
+<!-- Action Sheet Start -->
+<mp-actionSheet bindactiontap="btnClick" show="{{showActionsheet}}" actions="{{groups}}" title="{{title}}">
+</mp-actionSheet>
+<!-- Action Sheet End -->
+
+<!-- Toptips Start -->
+<mp-toptips msg="{{error}}" type="error" show="{{error_status}}"></mp-toptips>
+<!-- Toptips End -->
+
+<view style="display:flex;flex-wrap:nowrap;justify-content:space-between;align-items:flex-start;">
+  <!-- PC Dock Start -->
+  <scroll-view wx:if="{{PCmode}}" scroll-y="true" style="height:{{scrollHeight}}px;width:30%" class="dock">
+    <mp-cells ext-class="dock-fore">
+      <mp-cell wx:for="{{groups_array}}" hover bindtap="DockRedirect" title="{{item.group_name}}" id="{{item._id}}"
+        ext-class="dock-fore">
+        <image slot="icon" wx:if="{{item.group_image!='/images/group.png'||item.group_image_text==''}}"
+          src="{{item.group_image}}"
+          style="border-radius: 5px;margin-right: 16px;vertical-align: middle;width:30px; height: 30px;"></image>
+        <view slot="icon" wx:else style="background-color:{{item.group_image_color}}" class="group-image">
+          {{item.group_image_text}}</view>
+      </mp-cell>
+    </mp-cells>
+  </scroll-view>
+  <!-- PC Dock End -->
+
+  <!-- Page Content Start -->
+  <scroll-view scroll-y="true" style="height:{{scrollHeight}}px;{{PCmode?'width:70%':''}}" bindscroll="scroll"
+    class="{{PCmode?'separator':''}}" scroll-into-view="{{toView}}" scroll-with-animation="{{false}}" id="main">
+    <view id="page">
+
+      <!-- Brief Info Start -->
+      <mp-cells id="brief">
+        <mp-cell ext-class="{{arrange_mode==3?'name-margin':'name-no-margin'}}" link hover bindtap="updateInfo">
+          <image slot="icon" wx:if="{{image!='/images/group.png'||image_text==''}}" src="{{image}}"
+            catchtap="PreviewImage"
+            style="border-radius: 10px;margin-right: 16px;vertical-align: middle;width:60px; height: 60px;"></image>
+          <view slot="icon" wx:else style="background-color:{{image_color}};width:60px;height:60px;font-size:40px;"
+            class="group-image">{{image_text}}</view>
+          <view class="title">{{name}}</view>
+          <view slot="footer" style="background-color:{{type_background}}" class="footer">{{type}}</view>
+        </mp-cell>
+        <mp-cell ext-class="{{arrange_mode==3?'name-margin':'name-no-margin'}}" style="max-height:132px;"
+          bindtap="{{(!manageMembers_mode)&&(!manageAdmins_mode)&&(!manageOwnership_mode)?'updateInfo':''}}">
+          <scroll-view scroll-y="true" class="weui-cell__bd group-description"
+            style="max-height:100px;background:transparent;">{{description}}</scroll-view>
+        </mp-cell>
+      </mp-cells>
+      <!-- Brief Info End -->
+
+      <!-- Function Start -->
+      <view class="weui-cells__title functions" id="functions">
+        <text style="font-size:20px;">{{manageAdmins_mode?admins_title:members_title}}</text>
+        <view>
+          <image src="/images/Me/search.png" class="function-btn" bindtap="search"
+            style="height:25px;width:25px;margin-right: 16px;"></image>
+          <image src="/images/Me/sort.png" class="function-btn {{arrange_mode==3?'name-margin':'name-no-margin'}}"
+            style="height:25px;width:25px;" bindtap="sort"></image>
+        </view>
+      </view>
+      <view class="page__bd {{showSearch?'search':'search_hidden'}}">
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <input class="weui-input {{showSearch?'search_input':'search_input_hidden'}}" placeholder="请输入姓名或学号"
+                bindinput="Searching" />
+            </view>
+          </view>
+        </view>
+      </view>
+      <mp-loading duration="{{900}}" ext-class="demo0" type="dot-gray" show="{{showLoading}}" animated="{{true}}">
+      </mp-loading>
+      <!-- Function End -->
+
+      <view style="position:relative;top:-8px;">
+        <mp-cells wx:if="{{arrange_admin&&(current_admins_member-(showSearch?search_admins_member:0)>0)}}"
+          id="GroupAdmins" title="负责人及管理员" ext-class="{{index_admins_delete!=-1?'transform':''}}"
+          style="--current--:{{8+(current_admins_member-(showSearch?search_admins_member:0)>0?41:0)+(current_admins_member-(showSearch?search_admins_member:0))*62}}px;--new--:{{8+(new_admins_member-(showSearch?search_admins_member:0)>0?41:0)+(new_admins_member-(showSearch?search_admins_member:0))*62}}px;">
+          <mp-cell wx:for="{{members_admins_detail}}" wx:if="{{(!item.deleted)&&(!item.searchHidden)}}"
+            id="{{item.number}}"
+            ext-class="{{index==index_admins_delete?'deleted':(index>index_admins_delete&&index_admins_delete!=-1?'deleted_up':'')}} {{item.new_user?'members-new':''}}"
+            bindtap="{{manageOwnership_mode?(ownership!=item._openid?'onwershipChange':''):''}}">
+            <image wx:if="{{item._avatarUrl!='/images/Me/default_profile_photo.jpg'||item.avatar_text==''}}"
+              hidden="{{((admins_mode==5&&(!item.admin))||admins_mode==10)&&ownership!=item._openid&&(manageMembers_mode||manageAdmins_mode)}}"
+              slot="icon" src="{{item._avatarUrl}}"
+              style="opacity:{{((admins_mode==5&&item.admin||ownership==item._openid)&&manageMembers_mode)?'0.4':'1'}}"
+              class="member-list-avatar"></image>
+            <view slot="icon" wx:else
+              hidden="{{((admins_mode==5&&(!item.admin))||admins_mode==10)&&ownership!=item._openid&&(manageMembers_mode||manageAdmins_mode)}}"
+              style="background-color:{{item.avatar_color}};opacity:{{((admins_mode==5&&item.admin||ownership==item._openid)&&manageMembers_mode)?'0.4':'1'}}"
+              class="avatar">{{item.avatar_text}}</view>
+            <mp-icon
+              wx:if="{{((admins_mode==5&&(!item.admin))||admins_mode==10)&&ownership!=item._openid&&manageMembers_mode}}"
+              slot="icon" type="outline" icon="delete" color="#E64340" size="{{30}}" ext-class="member-func-btn"
+              id="{{index+space+item.number+space+item._openid}}" bindtap="delete"></mp-icon>
+            <mp-icon wx:if="{{ownership!=item._openid&&(!item.admint)&&manageAdmins_mode}}" slot="icon" type="field"
+              icon="add2" size="{{30}}" id="{{index+space+item.number+space+item._openid}}" bindtap="add"
+              ext-class="member-func-btn add {{item.number==add_index?'add-to-remove':''}}"></mp-icon>
+            <mp-icon wx:if="{{ownership!=item._openid&&item.admint&&manageAdmins_mode}}" slot="icon" type="field"
+              icon="close2" size="{{30}}" id="{{index+space+item.number+space+item._openid}}" bindtap="remove"
+              ext-class="member-func-btn remove {{item.number==remove_index?'remove-to-add':''}}"></mp-icon>
+            <view class="weui-cell__bd member-list-name"
+              style="max-width:{{arrange_mode==3?members_max_width-24:members_max_width}}px;" bindtap="showProfile"
+              id="{{item._openid}}">{{item.__realname}}</view>
+            <mp-icon wx:if="{{ownership_index==item.number&&manageOwnership_mode}}" type="field" icon="done"
+              color="#1AAD19" size="{{25}}" ext-class="member-func-btn"></mp-icon>
+            <view slot="footer" class="weui-cell__ft {{arrange_mode==3?'name-margin':'name-no-margin'}}"
+              style="white-space:nowrap;">{{PCmode?item.info_schools+' '+item.info_classes+'班 '+item.__uid:item.__uid}}
+            </view>
+          </mp-cell>
+        </mp-cells>
+        <mp-cells wx:if="{{arrange_mode==1&&(current_member-(showSearch?search_member:0))>0}}" id="GroupMembers"
+          title="{{arrange_admin?'成员':''}}" ext-class="{{index_delete!=-1?'transform':''}}"
+          style="--current--:{{8+((arrange_admin&&(current_member-(showSearch?search_member:0))>0)?41:0)+(current_member-(showSearch?search_member:0))*62}}px;--new--:{{8+((arrange_admin&&(new_member-(showSearch?search_member:0))>0)?41:0)+(new_member-(showSearch?search_member:0))*62}}px;">
+          <mp-cell wx:for="{{members_detail}}"
+            wx:if="{{((!item.deleted)&&(!item.searchHidden))&&((!arrange_admin)||((!item.admin)&&ownership!=item._openid))}}"
+            id="{{item.number}}"
+            ext-class="{{index==index_delete?'deleted':(index>index_delete&&index_delete!=-1?'deleted_up':'')}} {{item.new_user?'members-new':''}}"
+            bindtap="{{manageOwnership_mode?(ownership!=item._openid?'onwershipChange':''):''}}">
+            <image wx:if="{{item._avatarUrl!='/images/Me/default_profile_photo.jpg'||item.avatar_text==''}}"
+              hidden="{{((admins_mode==5&&(!item.admin))||admins_mode==10)&&ownership!=item._openid&&(manageMembers_mode||manageAdmins_mode)}}"
+              slot="icon" src="{{item._avatarUrl}}"
+              style="opacity:{{((admins_mode==5&&item.admin||ownership==item._openid)&&manageMembers_mode)?'0.4':'1'}}"
+              class="member-list-avatar"></image>
+            <view slot="icon" wx:else
+              hidden="{{((admins_mode==5&&(!item.admin))||admins_mode==10)&&ownership!=item._openid&&(manageMembers_mode||manageAdmins_mode)}}"
+              style="background-color:{{item.avatar_color}};opacity:{{((admins_mode==5&&item.admin||ownership==item._openid)&&manageMembers_mode)?'0.4':'1'}}"
+              class="avatar">{{item.avatar_text}}</view>
+            <mp-icon
+              wx:if="{{((admins_mode==5&&(!item.admin))||admins_mode==10)&&ownership!=item._openid&&manageMembers_mode}}"
+              slot="icon" type="outline" icon="delete" color="#E64340" size="{{30}}" ext-class="member-func-btn"
+              id="{{index+space+item.number+space+item._openid}}" bindtap="delete"></mp-icon>
+            <mp-icon wx:if="{{ownership!=item._openid&&(!item.admint)&&manageAdmins_mode}}" slot="icon" type="field"
+              icon="add2" size="{{30}}" id="{{index+space+item.number+space+item._openid}}" bindtap="add"
+              ext-class="member-func-btn add {{item.number==add_index?'add-to-remove':''}}"></mp-icon>
+            <mp-icon wx:if="{{ownership!=item._openid&&item.admint&&manageAdmins_mode}}" slot="icon" type="field"
+              icon="close2" size="{{30}}" id="{{index+space+item.number+space+item._openid}}" bindtap="remove"
+              ext-class="member-func-btn remove {{item.number==remove_index?'remove-to-add':''}}"></mp-icon>
+            <view class="weui-cell__bd member-list-name" style="max-width:{{members_max_width}}px;"
+              bindtap="showProfile" id="{{item._openid}}">{{item.__realname}}</view>
+            <mp-icon wx:if="{{ownership_index==item.number&&manageOwnership_mode}}" type="field" icon="done"
+              color="#1AAD19" size="{{25}}" ext-class="member-func-btn"></mp-icon>
+            <view slot="footer"
+              class="weui-cell__ft {{animation_enabled?(arrange_mode==3?'name-margin-ani':'name-no-margin-ani'):(arrange_mode==3?'name-margin':'name-no-margin')}}"
+              style="white-space:nowrap;">{{PCmode?item.info_schools+' '+item.info_classes+'班 '+item.__uid:item.__uid}}
+            </view>
+          </mp-cell>
+        </mp-cells>
+        <block wx:if="{{arrange_mode==3}}">
+          <block wx:for="{{members_name_detail}}" wx:for-item="initial">
+            <my-cells wx:if="{{(initial.current_member-(showSearch?initial.search_member:0))>0}}"
+              id="members_{{initial.title=='#'?0:initial.title}}" title="{{initial.title}}"
+              ext-class="{{initial.index_delete!=-1?'transform':''}}"
+              style="--current--:{{8+((initial.current_member-(showSearch?initial.search_member:0))>0?41:0)+(initial.current_member-(showSearch?initial.search_member:0))*62}}px;--new--:{{8+((initial.new_member-(showSearch?initial.search_member:0))>0?41:0)+(initial.new_member-(showSearch?initial.search_member:0))*62}}px;"
+              offset-top="{{navigation_bar_height-13}}">
+              <mp-cell wx:for="{{initial.members}}" wx:for-index="idx" wx:if="{{(!item.deleted)&&(!item.searchHidden)}}"
+                id="{{item.number}}"
+                ext-class="{{idx==initial.index_delete?'deleted':(idx>initial.index_delete&&initial.index_delete!=-1?'deleted_up':'')}} {{item.new_user?'members-new':''}}"
+                bindtap="{{manageOwnership_mode?(ownership!=item._openid?'onwershipChange':''):''}}">
+                <image wx:if="{{item._avatarUrl!='/images/Me/default_profile_photo.jpg'||item.avatar_text==''}}"
+                  hidden="{{((admins_mode==5&&(!item.admin))||admins_mode==10)&&ownership!=item._openid&&(manageMembers_mode||manageAdmins_mode)}}"
+                  slot="icon" src="{{item._avatarUrl}}"
+                  style="opacity:{{((admins_mode==5&&item.admin||ownership==item._openid)&&manageMembers_mode)?'0.4':'1'}}"
+                  class="member-list-avatar"></image>
+                <view slot="icon" wx:else
+                  hidden="{{((admins_mode==5&&(!item.admin))||admins_mode==10)&&ownership!=item._openid&&(manageMembers_mode||manageAdmins_mode)}}"
+                  style="background-color:{{item.avatar_color}};opacity:{{((admins_mode==5&&item.admin||ownership==item._openid)&&manageMembers_mode)?'0.4':'1'}}"
+                  class="avatar">{{item.avatar_text}}</view>
+                <mp-icon
+                  wx:if="{{((admins_mode==5&&(!item.admin))||admins_mode==10)&&ownership!=item._openid&&manageMembers_mode}}"
+                  slot="icon" type="outline" icon="delete" color="#E64340" size="{{30}}" ext-class="member-func-btn"
+                  id="{{idx+space+item.number+space+item._openid}}" bindtap="delete"></mp-icon>
+                <mp-icon wx:if="{{ownership!=item._openid&&(!item.admint)&&manageAdmins_mode}}" slot="icon" type="field"
+                  icon="add2" size="{{30}}" id="{{idx+space+item.number+space+item._openid}}" bindtap="add"
+                  ext-class="member-func-btn add {{item.number==add_index?'add-to-remove':''}}"></mp-icon>
+                <mp-icon wx:if="{{ownership!=item._openid&&item.admint&&manageAdmins_mode}}" slot="icon" type="field"
+                  icon="close2" size="{{30}}" id="{{idx+space+item.number+space+item._openid}}" bindtap="remove"
+                  ext-class="member-func-btn remove {{item.number==remove_index?'remove-to-add':''}}"></mp-icon>
+                <view class="weui-cell__bd member-list-name" style="max-width:{{members_max_width-24}}px;"
+                  bindtap="showProfile" id="{{item._openid}}">{{item.__realname}}</view>
+                <mp-icon wx:if="{{ownership_index==item.number&&manageOwnership_mode}}" type="field" icon="done"
+                  color="#1AAD19" size="{{25}}" ext-class="member-func-btn"></mp-icon>
+                <view slot="footer"
+                  class="weui-cell__ft {{animation_enabled?(arrange_mode==3?'name-margin-ani':'name-no-margin-ani'):(arrange_mode==3?'name-margin':'name-no-margin')}}"
+                  style="white-space:nowrap;">
+                  {{PCmode?item.info_schools+' '+item.info_classes+'班 '+item.__uid:item.__uid}}</view>
+              </mp-cell>
+            </my-cells>
+          </block>
+        </block>
+      </view>
+      <view class="weui-cells__tips">{{admins_mode==5&&manageMembers_mode?'灰色头像的成员不可操作':''}}</view>
+
+      <view wx:if="{{admins_mode>=5&&(!manageMembers_mode)&&(!manageAdmins_mode)&&(!manageOwnership_mode)}}">
+        <view class="weui-cells__title">
+          <text style="font-size:20px;">{{manage_title}}</text>
+        </view>
+        <mp-cells>
+          <mp-cell ext-class="admin {{arrange_mode==3?'name-margin':'name-no-margin'}}" hover link
+            title="{{manageTeacher_title}}" bindtap="ManageTeacher">
+            <image class="footer-icon" src="../../../../images/teacher.png" slot="footer"></image>
+          </mp-cell>
+          <mp-cell ext-class="admin {{arrange_mode==3?'name-margin':'name-no-margin'}}" hover link
+            title="{{manageMembers_title}}" bindtap="ManageMembers">
+            <image class="footer-icon" src="../../../../images/members.png" slot="footer"></image>
+          </mp-cell>
+          <mp-cell ext-class="admin {{arrange_mode==3?'name-margin':'name-no-margin'}}" hover link
+            title="{{managePrivacy_title}}" bindtap="ManagePrivacy">
+            <image class="footer-icon" src="../../../../images/privacy.png" slot="footer"></image>
+          </mp-cell>
+          <mp-cell wx:if="{{privacy=='01'||privacy=='11'}}"
+            ext-class="admin {{arrange_mode==3?'name-margin':'name-no-margin'}}" hover link title="{{groupLog_title}}"
+            bindtap="GroupLogs">
+            <mp-badge wx:if="{{verified_members_length!=0}}" content="{{verified_members_length}}"
+              style="margin-left: 5px;" />
+            <image class="footer-icon" src="../../../../images/log.png" slot="footer"></image>
+          </mp-cell>
+        </mp-cells>
+      </view>
+
+      <view wx:if="{{admins_mode==10&&(!manageMembers_mode)&&(!manageAdmins_mode)&&(!manageOwnership_mode)}}">
+        <mp-cells title=" ">
+          <mp-cell ext-class="admin {{arrange_mode==3?'name-margin':'name-no-margin'}}" hover link
+            title="{{manageAdmins_title}}" bindtap="ManageAdmins">
+            <image class="footer-icon" src="../../../../images/admin.png" slot="footer"></image>
+          </mp-cell>
+          <mp-cell ext-class="admin {{arrange_mode==3?'name-margin':'name-no-margin'}}" hover link
+            title="{{manageOwnership_title}}" bindtap="ManageOwnership">
+            <image class="footer-icon" src="../../../../images/ownership.png" slot="footer"></image>
+          </mp-cell>
+        </mp-cells>
+      </view>
+
+      <view style="height:100px"> </view>
+    </view>
+  </scroll-view>
+  <!-- Page Content End -->
+</view>
+
+<view id="button" wx:if="{{manageMembers_mode||manageAdmins_mode||manageOwnership_mode}}"
+  style="{{PCmode?'margin-left:30%;width:70%':''}}">
+  <view class="fun-btn"><button class="weui-btn" type="primary" bindtap="Finish" loading="{{FinishLoading}}">完成</button>
+  </view>
+  <view class="fun-btn"><button class="weui-btn" type="default" bindtap="Cancel">取消</button></view>
+</view>
+<image id="footer-img" wx:if="{{manageMembers_mode||manageAdmins_mode||manageOwnership_mode}}"
+  style="{{PCmode?'margin-left:30%;width:70%':''}}"></image>
+
+
+<mp-dialog title="更新失败" show="{{dialogAdminsShow}}" bindbuttontap="tapDialogAdminsButton" buttons="{{buttons}}">
+  <view>未能成功更新管理员信息</view>
+  <view>请再试一次</view>
+</mp-dialog>
+<mp-dialog title="更新失败" show="{{dialogMembersShow}}" bindbuttontap="tapDialogMembersButton" buttons="{{buttons}}">
+  <view>未能成功更新成员信息</view>
+  <view>请再试一次</view>
+</mp-dialog>
+<mp-dialog title="更新失败" show="{{dialogOwnershipShow}}" bindbuttontap="tapDialogOwnershipButton" buttons="{{buttons}}">
+  <view>未能成功更新负责人信息</view>
+  <view>请再试一次</view>
+</mp-dialog>
+<mp-dialog title="成员删除确认" show="{{dialogRemoveMembersShow}}" bindbuttontap="tapDialogRemoveMembersButton"
+  buttons="{{buttons}}">
+  <view>您确定要将<view style="font-weight:700">{{name_temp}} {{uid_temp}}</view>从团体中移除吗？</view>
+</mp-dialog>
+<mp-dialog title="负责人变更确认" show="{{dialogOwnershipEnsureShow}}" bindbuttontap="tapDialogOwnershipButton"
+  buttons="{{buttons}}">
+  <view style="color:#C00000">您确定要将<view style="font-weight:700">{{name_temp}} {{uid_temp}}</view>设为新的负责人吗？</view>
+</mp-dialog>
+<mp-dialog title="退出团体确认" show="{{dialogExitShow}}" bindbuttontap="tapDialogExitButton" buttons="{{buttons}}">
+  <view style="color:#C00000">您确定要退出团体<text style="font-weight:700">{{name}}</text>吗？<view wx:if="{{admins_mode==10}}"
+      style="font-weight:700">此操作同时会解散该团体！</view>
+  </view>
+</mp-dialog>
+
+<view id="sidebar" class="sidebar {{(arrange_mode==3?'sidebar-show':'sidebar-hide')}}" bindtouchstart="sidebar_start"
+  bindtouchmove="sidebar_move" bindtouchend="sidebar_end">
+  <my-sidebar id="sidebar" />
+</view>
+
+<view wx:if="{{mask}}" class="{{mask_shown?'mask':'mask_hidden'}}" bindtap="HideMask">
+  <view class="QR-Code-box" style="left:{{margin}}px;right:{{margin}}px;top:{{padding+60}}px;bottom:{{padding}}px"
+    catchtap="blank">
+    <view style="margin-top:20px;">
+      <mp-cells>
+        <mp-cell ext-class="my-cell">
+          <image slot="icon" wx:if="{{image!='/images/group.png'||image_text==''}}" src="{{image}}"
+            style="border-radius: 10px;margin-right: 16px;vertical-align: middle;width:48px; height: 48px;"></image>
+          <view slot="icon" wx:else
+            style="background-color:{{image_color}};width:48px;height:48px;font-size:28px;line-height: 48px;"
+            class="group-image">{{image_text}}</view>
+          <view class="title" style="max-height: 64px;overflow: hidden;">{{name}}</view>
+          <view slot="footer" class="footer">{{type}}</view>
+        </mp-cell>
+      </mp-cells>
+    </view>
+    <image class="QR-Code" src="{{qrCodeImg}}"></image>
+    <view class="description">单击空白处关闭二维码</view>
+  </view>
+</view>
+
+<view wx:if="{{maskProfile}}" class="mask-tran" bindtap="HideMaskProfile">
+  <view class="user-profile" style="left:{{profile_left}}px;top:{{profile_top}}px;" catchtap="blank">
+    <mp-cells ext-class="user-profile-tran">
+      <mp-cell ext-class="my-cell user-profile-tran">
+        <image slot="icon"
+          wx:if="{{userProfile._avatarUrl!='/images/Me/default_profile_photo.jpg'||userProfile.avatar_text==''}}"
+          src="{{userProfile._avatarUrl}}"
+          style="border-radius: 10px;margin-right: 16px;vertical-align: middle;width:48px; height: 48px;"></image>
+        <view slot="icon" wx:else
+          style="background-color:{{userProfile.avatar_color}};width:48px;height:48px;font-size:28px;line-height: 48px;"
+          class="group-image">{{userProfile.avatar_text}}</view>
+        <view>
+          <view class="user-profile-name user-profile-text">{{userProfile.__realname}}</view>
+          <image style="height:25px;width:25px;vertical-align:baseline;margin-left:8px;"
+            src="{{userProfile.info_gender=='男'?'/images/Me/male.png':userProfile.info_gender=='女'?'/images/Me/female.png':''}}">
+          </image>
+        </view>
+        <view class="user-profile-uid user-profile-text">{{userProfile.__uid}}</view>
+      </mp-cell>
+    </mp-cells>
+    <view class="user-profile-info user-profile-text">学院：{{userProfile.info_schools}}</view>
+    <view class="user-profile-info user-profile-text">专业：{{userProfile.info_specialities}}</view>
+    <view class="user-profile-info user-profile-text">班级：{{userProfile.info_classes}}班</view>
+  </view>
+</view>
+
+<view wx:if="{{showNameDialog2}}">
+  <mp-halfScreenDialog bindbuttontap="nameDialog" show="{{showNameDialog}}" maskClosable="{{false}}" title="修改团体名称"
+    buttons="{{buttons2}}">
+    <view slot="desc">
+      <view class="weui-half-screen-dialog__desc">团体名称<text class="weui-half-screen-dialog__tips alert"
+          style="font-weight:500;line-height:1">{{alert}}</text></view>
+      <mp-cells title=" ">
+        <mp-cell>
+          <input bindfocus="name_focus" bindinput="name_input" bindblur="name_blur" class="weui-input" value="{{name}}"
+            placeholder="请输入团体名称" />
+          <mp-icon wx:if="{{available}}" slot="footer" type="outline" icon="done2" color="#1AAD19"
+            style="margin-right:4px;" size="{{20}}"></mp-icon>
+          <mp-icon wx:if="{{unavailable}}" slot="footer" type="outline" icon="close2" color="#E64340"
+            style="margin-right:4px;" size="{{20}}"></mp-icon>
+          <view wx:if="{{namechecking}}" slot="footer" class="weui-loading" style="width:20px;height:20px;"></view>
+        </mp-cell>
+      </mp-cells>
+    </view>
+  </mp-halfScreenDialog>
+</view>
+
+<view wx:if="{{showPhotoDialog2}}">
+  <mp-halfScreenDialog bindbuttontap="photoDialog" show="{{showPhotoDialog}}" maskClosable="{{false}}" title="修改团体头像"
+    buttons="{{buttons2}}">
+    <view slot="desc">
+      <view class="weui-half-screen-dialog__desc">从QQ获取头像<text class="weui-half-screen-dialog__tips alert"
+          style="font-weight:500;line-height:1">{{alert}}</text></view>
+      <radio-group class="radio-group radio2" bindchange="qqradioChange">
+        <radio class="radio fun-radio" wx:for-items="{{qq_items}}" wx:key="name" value="{{item.name}}"
+          checked="{{item.checked}}">
+          <text>{{item.value}}</text>
+        </radio>
+      </radio-group>
+      <mp-cells title=" ">
+        <mp-cell>
+          <image slot="icon" src="{{preview_photo}}"
+            style="border-radius: 10px;margin-right: 16px;vertical-align: middle;width:40px; height: 40px;"></image>
+          <input bindfocus="profile_photo_focus" bindinput="profile_photo_input" bindblur="profile_photo_blur"
+            type="number" maxlength="10" class="weui-input" placeholder="请输入{{qq_type=='group'?'QQ群':'个人QQ'}}号" />
+          <mp-icon wx:if="{{exist}}" slot="footer" type="outline" icon="done2" color="#1AAD19" style="margin-right:4px;"
+            size="{{20}}"></mp-icon>
+          <mp-icon wx:if="{{unexist}}" slot="footer" type="outline" icon="close2" color="#E64340"
+            style="margin-right:4px;" size="{{20}}"></mp-icon>
+          <view wx:if="{{photochecking}}" slot="footer" class="weui-loading" style="width:20px;height:20px;"></view>
+        </mp-cell>
+      </mp-cells>
+    </view>
+  </mp-halfScreenDialog>
+</view>
+
+<view wx:if="{{showDescDialog2}}">
+  <mp-halfScreenDialog bindbuttontap="descDialog" show="{{showDescDialog}}" maskClosable="{{false}}" title="修改团体简介"
+    buttons="{{buttons2}}">
+    <view slot="desc">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <textarea class="weui-textarea" placeholder="团体简介，不超过200个字符" value="{{description}}"
+            style="min-height: 3.3em;max-height: 10em;" maxlength="-1" auto-height="false" bindinput="textarea_input"
+            bindblur="textarea_blur" />
+          <view class="weui-textarea-counter {{textarea_count>200?'alert':''}}">{{textarea_count}}/200</view>
+      </view>
+    </view>
+  </view>
+</mp-halfScreenDialog>
+</view>

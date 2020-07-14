@@ -1,0 +1,68 @@
+/* miniprogram/pages/Todos/Application/Todos_submit.wxss */
+@import '../../../style/btn_2_fixed.wxss';
+@import '../../../style/dark_mode.wxss';
+
+
+page {
+  --color-warn: #D84E43;
+}
+
+@media(prefers-color-scheme:light) {
+  page {
+    --color-warn: #D84E43;
+  }
+}
+
+@media(prefers-color-scheme:dark) {
+  page {
+    --color-warn: #F76260;
+  }
+}
+
+.alert {
+  color: #E00000;
+}
+
+.accept {
+  color: #07C160;
+}
+
+.reject {
+  color: #FA5151;
+}
+
+.title {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.desc {
+  font-size: 0.8em;
+  color: var(--color-warn);
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 1.5%;
+}
+
+.desc2 {
+  color: #7b7b7b;
+}
+
+.desc3 {
+  font-size: 1.2em;
+  color: var(--color-warn);
+  margin-top: 16px;
+}
+
+.tips {
+  color: var(--color-warn);
+}
+
+.fun-btn {
+  display: flex;
+  flex-basis: 30%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 30%;
+  min-width: 30%;
+}

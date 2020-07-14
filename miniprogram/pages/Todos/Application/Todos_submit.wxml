@@ -1,0 +1,108 @@
+<!--miniprogram/pages/Todos/Application/Todos_submit.wxml-->
+
+<!-- Navigation Bar Start -->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" title="提交借用申请"
+  back="{{!navigationbar_show}}" extClassBg="nav">
+</mp-navigation-bar>
+<!-- Navigation Bar End -->
+
+<view class="page-body">
+  <form bindreset="ResetInput">
+
+    <view class="page-section">
+      <view class="{{weui_h}} title" style="margin-top: {{marginT}}%">教室申请信息</view>
+
+      <view hidden="{{teacherEnabled}}">
+        <mp-cells ext-class="my-cells" title="教室信息">
+          <picker bindchange="bindSchoolPickerChange" value="{{school_index}}" range="{{school_array}}">
+            <mp-cell link hover value="校区" footer="{{schools}}"></mp-cell>
+          </picker>
+          <picker bindchange="bindTypePickerChange" value="{{type_index}}" range="{{type_array}}">
+            <mp-cell link hover value="教室类型" footer="{{types}}"></mp-cell>
+          </picker>
+          <picker bindchange="bindVolumePickerChange" value="{{volume_index}}" range="{{volume_array}}">
+            <mp-cell link hover value="教室容量" footer="{{volumes}}"></mp-cell>
+          </picker>
+          <picker bindchange="bindmultimediaPickerChange" value="{{multimedia_index}}" range="{{multimedia_array}}">
+            <mp-cell link hover value="是否需要多媒体" footer="{{multimedia}}"></mp-cell>
+          </picker>
+        </mp-cells>
+
+        <mp-cells ext-class="my-cells" title="时间信息">
+          <picker mode="multiSelector" bindchange="bindTimeStartMultiPickerChange" value="{{TimeS_Index}}"
+            range="{{Time_Array}}">
+            <mp-cell link hover value="开始日期及节次" footer="{{timeS}}"></mp-cell>
+          </picker>
+          <picker mode="multiSelector" bindchange="bindTimeEndMultiPickerChange" value="{{TimeE_Index}}"
+            range="{{Time_Array}}">
+            <mp-cell link hover value="结束日期及节次" footer="{{timeE}}"></mp-cell>
+          </picker>
+        </mp-cells>
+        <view class="weui-cells__tips {{time_footer=='accept'?'accept':(time_footer=='reject'?'reject':'')}}">
+          {{time_footer=='accept'?'已选择时间':(time_footer=='reject'?'开始日期及节次均不能晚于结束日期及节次':'请选择时间')}}</view>
+
+        <mp-form>
+          <mp-cells ext-class="my-cells" title="活动信息">
+            <picker bindchange="bindGroupPickerChange" value="{{group_index}}" range="{{group_array}}">
+              <mp-cell link hover value="申请团体" footer="{{groups}}"></mp-cell>
+            </picker>
+            <mp-cell title="活动主题">
+              <input bindinput="name_input" bindblur="name_blur" class="weui-input" placeholder="请输入活动主题" />
+            </mp-cell>
+            <view class="weui-cell">
+              <view class="weui-cell__bd">
+                <textarea class="weui-textarea" placeholder="活动备注，选填，不超过100个字符" style="min-height: 3.3em" maxlength="-1"
+                  auto-height="true" bindinput="textarea_input" bindblur="textarea_blur" />
+                <view class="weui-textarea-counter {{textarea_count>100?'alert':''}}">{{textarea_count}}/100</view>
+              </view>
+            </view>
+          </mp-cells>
+        </mp-form>
+      </view>
+
+      <!--信息框开始-->
+      <view class="{{weui_h}} title" style="margin-top: 5%">申请人信息</view>
+      <view class="weui-article__p desc"></view>
+      <mp-cells ext-class="my-cells">
+        <mp-cell value="姓名" footer="{{realname}}"></mp-cell>
+        <mp-cell value="学工号" footer="{{uid}}"></mp-cell>
+        <mp-cell link hover value="手机号" wx:if="{{phonenumber==''}}" bindtap="GoToInfo">
+          <view slot="footer" class="tips">必填，点此完善</view>
+        </mp-cell>
+        <mp-cell value="手机号" footer="{{phonenumber}}" wx:else></mp-cell>
+        <mp-cell link hover value="邮箱" wx:if="{{mailbox==''}}" bindtap="GoToInfo">
+          <view slot="footer">选填，点此完善</view>
+        </mp-cell>
+        <mp-cell value="邮箱" footer="{{mailbox}}" wx:else></mp-cell>
+        <mp-cell link hover value="QQ" wx:if="{{qqid==''}}" bindtap="GoToInfo">
+          <view slot="footer">选填，点此完善</view>
+        </mp-cell>
+        <mp-cell value="QQ" footer="{{qqid}}" wx:else></mp-cell>
+        <mp-cell link hover value="微信" wx:if="{{wxid==''}}" bindtap="GoToInfo">
+          <view slot="footer">选填，点此完善</view>
+        </mp-cell>
+        <mp-cell value="微信" footer="{{wxid}}" wx:else></mp-cell>
+      </mp-cells>
+      <!--信息框结束-->
+    </view>
+
+    <!--按钮开始-->
+    <view id="button">
+      <view class="fun-btn">
+        <button class="weui-btn" type="primary" bindtap="Submit" loading="{{SubmitLoading}}" disabled="{{SubmitDisabled}}">确认</button>
+      </view>
+      <view class="fun-btn">
+        <button class="weui-btn" type="warn" formType="reset">重置</button>
+      </view>
+      <view class="fun-btn">
+        <button class="weui-btn" type="default" bindtap="GoBack">取消</button>
+      </view>
+    </view>
+    <view id="footer-img"></view>
+    <!--按钮结束-->
+  </form>
+
+  <view style="height:100px;"></view>
+</view>
+
+<mp-toptips msg="{{error}}" type="error" show="{{error_status}}"></mp-toptips>

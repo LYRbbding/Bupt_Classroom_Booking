@@ -1,0 +1,23 @@
+<!--miniprogram/pages/Me/UserInfo/Avatar/Me_Info_ava.wxml-->
+
+<!-- Navigation Bar Start -->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" title="同步微信头像"
+  back="{{!navigationbar_show}}" extClassBg="nav">
+</mp-navigation-bar>
+<!-- Navigation Bar End -->
+
+<mp-msg title="获取用户头像">
+  <image slot="img" mode="aspectFit" src="{{profile_photo}}"
+    class="img {{(profile_photo==''||profile_photo=='/images/Me/default_profile_photo.jpg')?'avatar-mode':''}}"></image>
+  <view slot="desc">如果无法获取头像，请点击下方按钮前往授权设置页允许获取您的“用户信息”</view>
+  <view slot="extend">
+    <image src="/images/Me/getUserInfo.jpg" style="width:100%;border-radius:10px;" mode="widthFix"></image>
+  </view>
+  <view slot="handle">
+    <button class="weui-btn" type="primary" open-type="getUserInfo" bindgetuserinfo="userinfo">获取微信头像</button>
+    <button class="weui-btn" type="default" open-type="openSetting">前往授权设置</button>
+  </view>
+</mp-msg>
+
+<mp-toptips msg="{{error}}" type="error" show="{{error_status}}"></mp-toptips>
+<mp-toptips msg="{{success}}" type="success" show="{{success_status}}" bindhide="GoBack"></mp-toptips>

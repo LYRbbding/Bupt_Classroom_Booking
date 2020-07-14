@@ -1,0 +1,8 @@
+/* miniprogram/pages/Me/Messages/Me_messages.wxss */
+@import '../../../style/dark_mode.wxss';
+
+.nogroup {
+  color: #7E7E7E;
+  margin: 5% auto;
+  text-align: center;
+}

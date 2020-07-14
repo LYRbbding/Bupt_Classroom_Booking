@@ -1,0 +1,37 @@
+
+<view wx:for="{{sidebar_items}}"
+      wx:key="title"
+      id="sidebar-item-{{item.title=='#'?0:item.title}}"
+      class="sidebar-item {{index==sidebar_index_sel?'sidebar-item-selected':''}} {{index==sidebar_index?'sidebar-on-hode':(((index-1==sidebar_index)||(index+1==sidebar_index))?'sidebar-on-hode-padding':(((index-2==sidebar_index)||(index+2==sidebar_index))?'sidebar-on-hode-margin':'sidebar-off-hode'))}}"
+      style="height:{{sidebar_height==540?20:item_height}}px;line-height:{{sidebar_height==540?20:item_height}}px;}">
+      {{item.title}}
+</view>
+
+<view class="sidebar-tips-mask">
+    <view wx:for="{{sidebar_items}}"
+          class="sidebar-item-mask"
+          style="top:{{item.top}}px;">
+        <view id="sidebar-tips-{{item.title=='#'?0:item.title}}"
+              class="sidebar-tips {{((index==sidebar_index)?'tips-show':'tips-hide')}} {{tips_ani?((index==sidebar_index)?'tips-show-ani':'tips-hide-ani'):''}}">
+            <view class="{{((index==sidebar_index)?'tips-text-show':'tips-text-hide')}} {{tips_ani?'tips-text-ani':''}}">{{item.title}}</view>
+        </view>
+    </view>
+</view>
+
+<movable-area>
+    <movable-view wx:for="{{sidebar_items}}"
+                  wx:if="{{sidebar_restore!=item.title}}"
+                  direction="vertical"
+                  id="sidebar-mov-item-{{item.title=='#'?0:item.title}}"
+                  bindtouchstart="sidebar_start"
+                  bindchange="sidebar_move"
+                  bindtouchend="sidebar_end"
+                  style="top:{{item.top}}px;">
+
+        <!--<view id="sidebar-tips-{{item.title=='#'?0:item.title}}"
+              class="{{(sidebar_origin==item.title&&tips_ani)?'sidebar-tips':'sidebar-tips-hide'}}">
+            <view class="{{tips_ani?'sidebar-tips-text':'sidebar-tips-text-hide'}}">{{initial}}</view>
+        </view>-->
+
+    </movable-view>
+</movable-area>

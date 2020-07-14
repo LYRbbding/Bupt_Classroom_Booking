@@ -1,0 +1,19 @@
+/* miniprogram/pages/Me/UserInfo/UserInfo/Me_Info_info.wxss */
+@import '../../../../style/btn_2.wxss';
+@import '../../../../style/dark_mode.wxss';
+
+.button {
+  background-color: rgba(0, 0, 0, 0);
+  color: #1AAD19;
+  min-height: auto;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+  line-height: 1;
+  border-radius: 0;
+  font-weight: 700;
+  font-size: 16px;
+  background: initial;
+  position: initial;
+  display: inline;
+}

@@ -1,0 +1,324 @@
+<!--miniprogram/pages/index/index.wxml-->
+
+<!-- Navigation Bar Start -->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" loading="{{navigationLoading}}"
+  title="{{title}}" back="{{navigationbar_show}}" wx:if="{{background}}" extClassBg="{{background?'nav':''}}">
+  <image class="scan" src="../../images/scanning.png" style="height:25px;width:25px;" slot="left" bindtap="scanning">
+  </image>
+</mp-navigation-bar>
+<!-- Navigation Bar End -->
+
+<view wx:if="{{welcome}}" style="z-index:10000;position:fixed;height:100%;width:100%;background:var(--weui-BG-1);">
+  <view style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">
+    <image src="/images/Me/gh_370de569963a_344.png" style="height:200px;width:200px;"></image>
+    <view
+      style="font-weight:700;color:var(--weui-FG-0);font-size:30px;letter-spacing:3px;line-height:180px;width:200px;text-align:center">
+      邮教有约</view>
+  </view>
+  <view style="position:absolute;bottom:100px;width:750rpx;text-align:center;">
+    <view class="myui-loading"></view>
+  </view>
+</view>
+
+<!-- Page Todos Start -->
+<view id="todos" hidden="{{current != 0}}">
+
+  <!-- Todos Content Start -->
+  <view class="{{identity == 'teacher'?(inv_hide?'todos-hide':'todos-show'):''}}">
+    <view wx:if="{{identity == 'teacher'}}" class="card {{inv_hide?'cards-hide':'cards-show'}}">
+      <scroll-view scroll-y="true" style="height:{{(showLoading||inv_count==0)?140:300}}px;" class="scroll-card">
+        <mp-cells title="等待同意的团体邀请({{inv_count}})：">
+          <block wx:if="{{invitation_available}}">
+            <mp-loading duration="{{900}}" type="circle" show="{{showLoading}}"></mp-loading>
+            <block wx:if="{{!showLoading}}" wx:for="{{invitation_groups}}">
+              <mp-cell>
+                <image slot="icon" wx:if="{{item.group_image!='/images/group.png'||item.group_image_text==''}}"
+                  src="{{item.group_image}}"
+                  style="border-radius: 10px;margin-right: 16px;vertical-align: middle;width:48px; height: 48px;">
+                </image>
+                <view slot="icon" wx:else style="background-color:{{item.group_image_color}}" class="group-image">
+                  {{item.group_image_text}}</view>
+                <view class="weui-cell__hd invitation-title" style="max-width:{{me_max_width-44}}px">{{item.group_name}}
+                </view>
+                <view slot="footer" class="footer">{{item.group_type=="classes"?'班级':item.subtype}}</view>
+              </mp-cell>
+              <view class="desc">{{item.group_description}}</view>
+              <view style="display:flex;margin:16px;justify-content:space-between;align-items:center;">
+                <view style="display:inline-block;">
+                  <view class="inv-loading weui-loadmore" wx:if="{{item.loading}}">
+                    <view class="weui-loading"></view>
+                    <view class="weui-loadmore__tips">操作中</view>
+                  </view>
+                </view>
+                <view style="display:inline-block;text-align:right;">
+                  <view class="inv-btn inv-accept" hover-class="inv-acc-hov" id="{{index+' '+item._id}}"
+                    bindtap="inv_accept">
+                    <mp-icon icon="done" type="field" size="{{30}}" color="#fff"></mp-icon>
+                  </view>
+                  <view class="inv-btn inv-refuse" hover-class="inv-ref-hov" id="{{index+' '+item._id}}"
+                    bindtap="inv_refuse">
+                    <mp-icon icon="close" type="field" size="{{30}}" color="#fff"></mp-icon>
+                  </view>
+                </view>
+              </view>
+            </block>
+            <view class="no-inv" wx:if="{{!showLoading&&inv_count==0}}">暂无邀请</view>
+          </block>
+          <button wx:else class="weui-btn invitation-tips" type="warn" plain="true"
+            bindtap="requestInvitation">获取失败，点此重试</button>
+        </mp-cells>
+      </scroll-view>
+    </view>
+    <view wx:if="{{identity=='student'}}">
+      <view class="todos-title" bindtap="TodosAccept">
+        <mp-icon icon="arrow" size="{{10}}" class="{{arrowAccept?'arrow-show':'arrow-hide'}}" color="var(--weui-FG-0)">
+        </mp-icon>
+        <text margin-left="8px">我的活动 <text class="todos-count">({{countAccept}})</text></text>
+      </view>
+      <scroll-view scroll-y="{{true}}" class="todos-box" style="max-height:{{arrowAccept?'1000px':0}}"
+        wx:if="{{countAccept!=0}}">
+        <mp-cells style="position: relative;top:-6px;">
+          <mp-cell hover wx:for="{{arrayAccept}}" id="{{item._id}}" bindtap="GoToApplicationResult">
+            <view class="todos-item">
+              <view class="todos-content" style="padding-right:32px;color:var(--color-aa);"><text
+                  class="todos-content-title">日期：</text>{{item.date_start}} 至 {{item.date_end}}</view>
+              <view class="todos-content" style="padding-right:32px;color:var(--color-bb);"><text
+                  class="todos-content-title">时间：</text>{{item.time_start}} 至 {{item.time_end}}</view>
+              <view class="todos-content" style="padding-right:32px;color:var(--color-cc);"><text
+                  class="todos-content-title">主办：</text>{{item.activity_group}}</view>
+              <view class="todos-content" style="padding-right:32px;color:var(--color-dd);"><text
+                  class="todos-content-title">地点：</text>{{item.classroom_school}} {{item.classroom}}</view>
+              <view class="todos-content" style="padding-right:32px;color:var(--color-ee);"><text
+                  class="todos-content-title">主题：</text>{{item.activity_name}}</view>
+            </view>
+          </mp-cell>
+        </mp-cells>
+      </scroll-view>
+      <view wx:else class="todos-no" style="height:{{arrowAccept?100:0}}px">暂无活动</view>
+    </view>
+    <view>
+      <view class="todos-title" bindtap="TodosWaiting">
+        <mp-icon icon="arrow" size="{{10}}" class="{{arrowWaiting?'arrow-show':'arrow-hide'}}" color="var(--weui-FG-0)">
+        </mp-icon>
+        <text margin-left="8px">{{identity=='student'?'审核中':'待审核'}}的申请 <text
+            class="todos-count">({{countWaiting}})</text></text>
+      </view>
+      <scroll-view scroll-y="{{true}}" class="todos-box" style="max-height:{{arrowAccept?'1000px':0}}"
+        wx:if="{{countWaiting!=0}}">
+        <mp-cells style="position: relative;top:-6px;">
+          <mp-cell hover wx:for="{{arrayWaiting}}" id="{{item._id}}" bindtap="GoToApplicationResult">
+            <view class="todos-item">
+              <view class="todos-content" style="padding-right:32px;color:var(--color-aa);"><text
+                  class="todos-content-title">日期：</text>{{item.date_start}} 至 {{item.date_end}}</view>
+              <view class="todos-content" style="padding-right:32px;color:var(--color-bb);"><text
+                  class="todos-content-title">时间：</text>{{item.time_start}} 至 {{item.time_end}}</view>
+              <view class="todos-content" style="padding-right:32px;color:var(--color-cc);"><text
+                  class="todos-content-title">主办：</text>{{item.activity_group}}</view>
+              <view class="todos-content" style="padding-right:32px;color:var(--color-dd);"><text
+                  class="todos-content-title">地点：</text>{{item.classroom_school}}
+                {{item.classroom_type}}({{item.classroom_volume}})</view>
+              <view class="todos-content" style="padding-right:32px;color:var(--color-ee);"><text
+                  class="todos-content-title">主题：</text>{{item.activity_name}}</view>
+            </view>
+          </mp-cell>
+        </mp-cells>
+      </scroll-view>
+      <view wx:else class="todos-no" style="height:{{arrowWaiting?100:0}}px">暂无{{identity=='student'?'审核中':'待审核'}}的申请
+      </view>
+    </view>
+    <view>
+      <view class="todos-title" bindtap="TodosFinish">
+        <mp-icon icon="arrow" size="{{10}}" class="{{arrowFinish?'arrow-show':'arrow-hide'}}" color="var(--weui-FG-0)">
+        </mp-icon>
+        <text margin-left="8px">{{identity=='student'?'未通过':'已审核'}}的申请 <text
+            class="todos-count">({{countFinish}})</text></text>
+      </view>
+      <scroll-view scroll-y="{{true}}" class="todos-box" style="max-height:{{arrowFinish?'1000px':0}}"
+        wx:if="{{countFinish!=0}}">
+        <mp-cells style="position: relative;top:-6px;">
+          <mp-cell hover wx:for="{{arrayFinish}}" id="{{item._id}}" bindtap="GoToApplicationResult">
+            <view class="todos-item">
+              <view class="todos-content" style="padding-right:32px;color:var(--color-aa);"><text
+                  class="todos-content-title">日期：</text>{{item.date_start}} 至 {{item.date_end}}</view>
+              <view class="todos-content" style="padding-right:32px;color:var(--color-bb);"><text
+                  class="todos-content-title">时间：</text>{{item.time_start}} 至 {{item.time_end}}</view>
+              <view class="todos-content" style="padding-right:32px;color:var(--color-cc);"><text
+                  class="todos-content-title">主办：</text>{{item.activity_group}}</view>
+              <view class="todos-content" style="padding-right:32px;color:var(--color-dd);"><text
+                  class="todos-content-title">地点：</text>{{item.classroom_school}}
+                {{item.classroom_type}}({{item.classroom_volume}})</view>
+              <view class="todos-content" style="padding-right:32px;color:var(--color-ee);"><text
+                  class="todos-content-title">主题：</text>{{item.activity_name}}</view>
+              <view wx:if="{{identity == 'student' && item.reason != ''}}" class="todos-content"
+                style="padding-right:32px;"><text class="todos-content-title">未通过原因：</text>{{item.reason}}</view>
+            </view>
+          </mp-cell>
+        </mp-cells>
+      </scroll-view>
+      <view wx:else class="todos-no" style="height:{{arrowFinish?100:0}}px">暂无{{identity=='student'?'未通过':'已审核'}}的申请
+      </view>
+    </view>
+  </view>
+  <!-- Todos Content End -->
+
+  <view style="height:100px;"></view>
+
+  <view class="fab-btn inv-accept" bindtap="GoToApplication" hover-class="inv-acc-hov">
+    <mp-icon icon="add" type="field" size="{{30}}" color="#fff"></mp-icon>
+  </view>
+</view>
+<!-- Page Todos End -->
+
+<!-- Page Query Start -->
+<view id="query" hidden="{{current != 1}}">
+
+  <!-- Query Content Start -->
+  <form bindreset="ResetInput">
+    <mp-cells>
+      <picker mode="multiSelector" bindchange="bindSchoolBuilding_Change" bindcolumnchange="bindSchoolBuilding_Column"
+        value="{{school_building_index}}" range="{{school_building_array}}">
+        <mp-cell link hover value="教学楼" footer="{{school_building_value}}"></mp-cell>
+      </picker>
+      <picker wx:if="{{classroom_multi}}" mode="multiSelector" bindchange="bindClassroom_MultiChange"
+        bindcolumnchange="bindClassroom_Column" value="{{classroom_multi_index}}" range="{{classroom_multi_array}}">
+        <mp-cell link hover value="教室" footer="{{classroom_value}}"></mp-cell>
+      </picker>
+      <picker wx:else bindchange="bindClassroom_Change" value="{{classroom_single_index}}"
+        range="{{classroom_single_array}}">
+        <mp-cell link hover value="教室" footer="{{classroom_value}}"></mp-cell>
+      </picker>
+      <picker mode="date" start="2020-02-24" end="2020-07-03" bindchange="bindDateSChange">
+        <mp-cell link hover value="起始日期" footer="{{DateS_value}}"></mp-cell>
+      </picker>
+      <picker bindchange="bindSectionSChange" value="{{sectionS_index}}" range="{{time_array}}">
+        <mp-cell link hover value="起始节次" footer="{{sectionS_value}}"></mp-cell>
+      </picker>
+      <picker mode="date" start="2020-02-24" end="2020-07-03" bindchange="bindDateEChange">
+        <mp-cell link hover value="终止日期" footer="{{DateE_value}}"></mp-cell>
+      </picker>
+      <picker bindchange="bindSectionEChange" value="{{sectionE_index}}" range="{{time_array}}">
+        <mp-cell link hover value="终止节次" footer="{{sectionE_value}}"></mp-cell>
+      </picker>
+    </mp-cells>
+    <view class="weui-cells__tips {{time_footer==''?'':time_footer}}">{{time_footer_text}}</view>
+    <view style="height:32px;"></view>
+    <view id="button" style="position:inherit">
+      <view class="fun-btn"><button class="weui-btn" type="primary" bindtap="Query"
+          disabled="{{time_footer!='accept'}}">查询</button></view>
+      <view class="fun-btn"><button class="weui-btn" type="warning" formType="reset">重置</button></view>
+    </view>
+  </form>
+  <!-- Query Content End -->
+
+  <view style="height:100px;"></view>
+</view>
+<!-- Page Query End -->
+
+<!-- Page Me Start -->
+<view id="me" hidden="{{current != 2}}">
+
+  <!-- Me Content Start -->
+  <view style="position:relative;top:-10px;">
+    <mp-cells ext-class="my-cells">
+      <mp-cell ext-class="my-cell">
+        <view style="height:56px;"></view>
+      </mp-cell>
+      <mp-cell link bindtap="GoToUserInfo" ext-class="my-cell">
+        <image slot="icon" src="{{profile_photo}}"
+          style="border-radius: 10px;margin-right: 16px;vertical-align: middle;width:80px; height: 80px;"></image>
+        <view class="name" style="max-width:{{me_max_width}}px;{{PCmode?'font-size:1.5em;':''}}">{{name}}</view>
+        <view class="blank">-</view>
+        <view class="description" style="max-width:{{me_max_width}}px;{{PCmode?'font-size:1em;':''}}">{{description}}
+        </view>
+        <view slot="footer" wx:if="{{verification_status}}">
+          <mp-badge style="margin-left: 5px;margin-right: 5px;" />
+        </view>
+      </mp-cell>
+    </mp-cells>
+
+    <block wx:if="{{!PCmode}}">
+      <mp-cells title=" ">
+        <mp-cell link hover title="我的团体" bindtap="GoToMyGroups">
+          <mp-icon slot="icon" type="outline" icon="group-detail" color="#06C060"
+            style="margin-right: 16px;vertical-align: baseline;" size="{{25}}"></mp-icon>
+        </mp-cell>
+        <mp-cell link hover title="我的消息" bindtap="GoToMessages">
+          <mp-icon slot="icon" type="outline" icon="comment" color="#FFBE00"
+            style="margin-right: 16px;vertical-align: baseline;" size="{{25}}"></mp-icon>
+        </mp-cell>
+        <mp-cell link hover title="活动历史" bindtap="GoToHistory">
+          <mp-icon slot="icon" type="outline" icon="time" color="#F76260"
+            style="margin-right: 16px;vertical-align: baseline;" size="{{25}}"></mp-icon>
+        </mp-cell>
+      </mp-cells>
+
+      <mp-cells title=" ">
+        <mp-cell link hover title="设置" bindtap="GoToSettings">
+          <mp-icon slot="icon" type="outline" icon="setting" color="#2782D7"
+            style="margin-right: 16px;vertical-align: baseline;" size="{{25}}"></mp-icon>
+        </mp-cell>
+        <mp-cell link hover title="微信消息推送" bindtap="GoToSubscription">
+          <mp-icon slot="icon" type="outline" icon="bellring-on" color="#2BA245"
+            style="margin-right: 16px;vertical-align: baseline;" size="{{25}}"></mp-icon>
+          <view slot="footer" wx:if="{{subscription_status}}">
+            <mp-badge style="margin-left: 5px;margin-right: 5px;" />
+          </view>
+        </mp-cell>
+      </mp-cells>
+    </block>
+
+    <block wx:else>
+      <view class="weui-cells__title"> </view>
+      <view class="weui-grids my-grids">
+        <view class="weui-grid" bindtap="GoToMyGroups">
+          <view style="margin-bottom:10px;text-align:center;">
+            <mp-icon slot="icon" type="outline" icon="group-detail" color="#06C060" style="margin-bottom:20px;"
+              size="{{40}}"></mp-icon>
+          </view>
+          <view class="weui-grid__label grid-title">我的团体</view>
+        </view>
+        <view class="weui-grid" bindtap="GoToMessages">
+          <view style="margin-bottom:10px;text-align:center;">
+            <mp-icon slot="icon" type="outline" icon="comment" color="#FFBE00" style="margin-bottom:20px;"
+              size="{{40}}"></mp-icon>
+          </view>
+          <view class="weui-grid__label grid-title">我的消息</view>
+        </view>
+        <view class="weui-grid" bindtap="GoToHistory">
+          <view style="margin-bottom:10px;text-align:center;">
+            <mp-icon slot="icon" type="outline" icon="time" color="#F76260" style="margin-bottom:20px;" size="{{40}}">
+            </mp-icon>
+          </view>
+          <view class="weui-grid__label grid-title">活动历史</view>
+        </view>
+      </view>
+      <view class="weui-cells__title"> </view>
+      <view class="weui-grids my-grids">
+        <view class="weui-grid" bindtap="GoToSettings">
+          <view style="margin-bottom:10px;text-align:center;">
+            <mp-icon slot="icon" type="outline" icon="setting" color="#2782D7" style="margin-bottom:20px;"
+              size="{{40}}"></mp-icon>
+          </view>
+          <view class="weui-grid__label grid-title">设置</view>
+        </view>
+        <view class="weui-grid" bindtap="GoToSubscription">
+          <view style="margin-bottom:10px;text-align:center;">
+            <mp-icon slot="icon" type="outline" icon="bellring-on" color="#2BA245" style="margin-bottom:20px;"
+              size="{{40}}"></mp-icon>
+            <mp-badge wx:if="{{subscription_status}}" style="position: absolute;top:10px;" />
+          </view>
+          <view class="weui-grid__label grid-title">微信消息推送</view>
+        </view>
+      </view>
+    </block>
+  </view>
+  <!-- Me Content End -->
+
+  <view style="height:100px;"></view>
+</view>
+<!-- Page Me End -->
+
+<!-- Tabbar Start -->
+<mp-tabbar ext-class="tabbar" style="position:fixed;bottom:0;width:100%;left:0;right:0;z-index:1000" list="{{list}}"
+  current="{{current}}" bindchange="tabChange"></mp-tabbar>
+<!-- Tabbar End -->

@@ -1,0 +1,28 @@
+<!--miniprogram/pages/Me/Settings/Me_settings.wxml-->
+
+<!-- Navigation Bar Start -->
+<mp-navigation-bar show="{{!navigationbar_show}}" animated="{{navigationbar_show}}" title="设置"
+  back="{{!navigationbar_show}}" extClassBg="nav">
+</mp-navigation-bar>
+<!-- Navigation Bar End -->
+
+<mp-cells>
+  <mp-cell link hover title="微信消息推送" bindtap="GoToSubscription">
+    <mp-icon slot="icon" type="outline" icon="bellring-on" color="#2BA245"
+      style="margin-right: 16px;vertical-align: baseline;" size="{{25}}"></mp-icon>
+  </mp-cell>
+  <mp-cell link hover title="清理缓存" bindtap="clearStorage">
+    <mp-icon slot="icon" type="outline" icon="delete" color="#EA6853"
+      style="margin-right: 16px;vertical-align: baseline;" size="{{25}}"></mp-icon>
+  </mp-cell>
+</mp-cells>
+
+<mp-cells title=" ">
+  <mp-cell link hover title="关于邮教有约" bindtap="GotoAbout">
+    <mp-icon slot="icon" type="outline" icon="info" color="#2782D7" style="margin-right: 16px;vertical-align: baseline;"
+      size="{{25}}"></mp-icon>
+  </mp-cell>
+</mp-cells>
+
+<mp-toptips msg="{{info}}" type="info" show="{{info_status}}"></mp-toptips>
+<mp-toptips msg="{{error}}" type="error" show="{{error_status}}"></mp-toptips>

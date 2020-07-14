@@ -1,0 +1,49 @@
+/* miniprogram/pages/Me/Settings/About/Me_Settings_about.wxss */
+@import '../../../../style/dark_mode.wxss';
+
+Page {
+  --color-bri: 100%;
+}
+
+@media (prefers-color-scheme:light) {
+  Page {
+    --color-bri: 100%;
+  }
+}
+
+@media (prefers-color-scheme:dark) {
+  Page {
+    --color-bri: 120%;
+  }
+}
+
+.weui-msg__icon-area image {
+  min-width: 180px;
+  min-height: 180px;
+  filter: brightness(calc(var(--color-bri)));
+}
+
+.button {
+  background-color: rgba(0, 0, 0, 0);
+  color: #576B95;
+  min-height: auto;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+  line-height: 1.5;
+  border-radius: 0;
+  font-weight: 500;
+  background: initial;
+  position: initial;
+  display: inline;
+  font-size: 18px;
+}
+
+.weui-footer {
+  position: fixed;
+  bottom: 5%;
+  left: 0;
+  right: 0;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}

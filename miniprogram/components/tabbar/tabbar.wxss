@@ -1,0 +1,1 @@
+page{--color-rev: 0%;}@media (prefers-color-scheme:light){page{--color-rev: 0%;}}@media (prefers-color-scheme:dark){page {--color-rev:100%;}}.iconMode{filter: invert(calc(var(--color-rev)))}
