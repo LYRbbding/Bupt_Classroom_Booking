@@ -380,7 +380,7 @@ Page({
                   }
                   if (result.total != 0) {
                     wx.cloud.callFunction({
-                      name: 'UpdateUserRelationship',
+                      name: 'UpdateDatabase',
                       data: {
                         collection: 'UserRelationship',
                         place: {
@@ -438,7 +438,7 @@ Page({
                 }
                 if (re.total != 0) {
                   wx.cloud.callFunction({
-                    name: 'UpdateUserRelationship',
+                    name: 'UpdateDatabase',
                     data: {
                       collection: 'StudentInfo',
                       place: {
@@ -504,7 +504,7 @@ Page({
               }
               if (res.total != 0) {
                 wx.cloud.callFunction({
-                  name: 'UpdateUserRelationship',
+                  name: 'UpdateDatabase',
                   data: {
                     collection: 'UserRelationship',
                     place: {

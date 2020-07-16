@@ -103,7 +103,7 @@ Page({
           this.setData({ SaveLoading: true })
           var that = this
           wx.cloud.callFunction({
-            name: 'UpdateUserRelationship',
+            name: 'UpdateDatabase',
             data: {
               collection: 'StudentInfo',
               place: {

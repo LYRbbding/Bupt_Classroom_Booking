@@ -7,6 +7,7 @@ Page({
 
   //页面的初始数据
   data: {
+    PCmode: false,
     navigationbar_show: false,
     school: '',
     type: '',
@@ -44,6 +45,11 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
+    if (getApp().globalData.systemPlatform.indexOf('macOS') != -1 || getApp().globalData.systemPlatform.indexOf('Windows') != -1 || getApp().globalData.systemPlatform.indexOf('win') != -1) {
+      this.setData({
+        PCmode: true
+      })
+    }
     this.setData({
       identity: getApp().globalData.identity,
       post: getApp().globalData.post
@@ -82,7 +88,9 @@ Page({
       status: data.status,
       group_id: data.activity_group,
       creator: data.activity_person,
+      reason: data.reason == undefined ? '' : data.reason
     })
+    this.data.allInfo = data
     db.collection('Groups').doc(data.activity_group).field({
       group_name: true,
       manage_ownership: true,
@@ -157,21 +165,21 @@ Page({
     }
   },
 
-  change: function () {
+  change: function (e) {
     if (!this.data.loading) {
       this.data.loading = true
       wx.showLoading({
         title: '操作中'
       })
       wx.cloud.callFunction({
-        name: 'UpdateUserRelationship',
+        name: 'UpdateDatabase',
         data: {
           collection: 'ActivityApplication',
           place: {
             _id: this.data._id
           },
           data: {
-            status: this.data.status == 'accept' ? 'finish' : 'obsolete',
+            status: e.currentTarget.id,
           }
         },
         success: res => {
@@ -179,7 +187,7 @@ Page({
             getApp().globalData.changed_todos = {
               _id: this.data._id,
               old_status: this.data.status,
-              new_status: this.data.status == 'accept' ? 'finish' : 'obsolete'
+              new_status: e.currentTarget.id
             }
             wx.navigateBack({
               delta: 1,
@@ -212,7 +220,7 @@ Page({
         AcceptLoading: true
       })
       wx.cloud.callFunction({
-        name: 'UpdateUserRelationship',
+        name: 'UpdateDatabase',
         data: {
           collection: 'ActivityApplication',
           place: {
@@ -231,48 +239,26 @@ Page({
             }
             if (getApp().globalData.post == '教务处') {
               wx.cloud.callFunction({
-                name: 'MessagePushService',
+                name: 'ClassroomArrangement',
                 data: {
-                  method: 'changed',
+                  type: this.data.type,
+                  campus: this.data.school,
+                  volume_min: this.data.allInfo.classroom_volume_min,
+                  volume_max: this.data.allInfo.classroom_volume_max,
+                  section_start: this.data.allInfo.time_section_start,
+                  section_end: this.data.allInfo.time_section_end,
+                  date_start: this.data.allInfo.time_date_start,
+                  date_end: this.data.allInfo.time_date_end,
+                  week_start: this.data.allInfo.time_week_start,
+                  week_end: this.data.allInfo.time_week_end,
+                  _id: this.data.allInfo._id,
                   group_id: this.data.group_id,
                   creator: this.data.creator,
-                  template_id: 'f6bfX5Ve-DEmv-8xrEzoXedd-v_ea45Pjwa6Xv00_Uk',
-                  page_path: 'index',
-                  push_data: {
-                    phrase1: { value: '审核通过' },
-                    time3: {
-                      value: '2020年' + this.data.timeS.substring(0, this.data.timeS.indexOf(' ')) + ' ' +
-                        section_time[section.indexOf(this.data.timeS.substring(this.data.timeS.indexOf('第') + 1, this.data.timeS.indexOf('节')))]
-                    },
-                    name4: { value: this.data.person.substring(0, 10) },
-                    thing2: { value: this.data.name.substring(0, 20) }
-                  }
-                },
-                success: result => {
-                  console.log(result)
-                }
-              })
-              wx.cloud.callFunction({
-                name: 'MessagePushService',
-                data: {
-                  method: 'release',
-                  group_id: this.data.group_id,
-                  template_id: 'fgAy80rTjWmiBZSGXUhP-kivXym3ZPC2SBZoUs9wuUY',
-                  page_path: 'index',
-                  push_data: {
-                    character_string10: {
-                      value:
-                        this.data.timeS.substring(0, this.data.timeS.indexOf('月')) + '-' +
-                        this.data.timeS.substring(this.data.timeS.indexOf('月') + 1, this.data.timeS.indexOf('日')) + '/' +
-                        this.data.timeS.substring(this.data.timeS.indexOf('第') + 1, this.data.timeS.indexOf('节')) +
-                        '～' + this.data.timeE.substring(0, this.data.timeE.indexOf('月')) + '-' +
-                        this.data.timeE.substring(this.data.timeE.indexOf('月') + 1, this.data.timeE.indexOf('日')) + '/' +
-                        this.data.timeE.substring(this.data.timeE.indexOf('第') + 1, this.data.timeE.indexOf('节'))
-                    },
-                    thing6: { value: this.data.name.substring(0, 20) },
-                    thing4: { value: (this.data.school + ' ' + this.data.classroom).substring(0, 20) },
-                    thing11: { value: this.data.remarks == '' ? '无' : this.data.remarks.substring(0, 20) }
-                  }
+                  person: this.data.person.substring(0, 10),
+                  name: this.data.name.substring(0, 20),
+                  timeS: this.data.timeS,
+                  timeE: this.data.timeE,
+                  remarks: this.data.remarks == '' ? '无' : this.data.remarks.substring(0, 20)
                 },
                 success: result => {
                   console.log(result)
@@ -312,7 +298,7 @@ Page({
           RefuseLoading: true
         })
         wx.cloud.callFunction({
-          name: 'UpdateUserRelationship',
+          name: 'UpdateDatabase',
           data: {
             collection: 'ActivityApplication',
             place: {

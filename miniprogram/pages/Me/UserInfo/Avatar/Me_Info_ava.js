@@ -32,7 +32,7 @@ Page({
   GoBack: function () {
     wx.navigateBack({ delta: 1 })
     wx.cloud.callFunction({
-      name: 'UpdateUserRelationship',
+      name: 'UpdateDatabase',
       data: {
         collection: 'UserRelationship',
         place: {
@@ -50,7 +50,7 @@ Page({
       }
     })
     wx.cloud.callFunction({
-      name: 'UpdateUserRelationship',
+      name: 'UpdateDatabase',
       data: {
         collection: 'StudentInfo',
         place: {

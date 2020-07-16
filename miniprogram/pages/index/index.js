@@ -273,7 +273,7 @@ Page({
               that.setData({ profile_photo: avatarUrl })
               getApp().globalData.avatarUrl = avatarUrl
               wx.cloud.callFunction({
-                name: 'UpdateUserRelationship',
+                name: 'UpdateDatabase',
                 data: {
                   collection: 'UserRelationship',
                   place: {
@@ -285,7 +285,7 @@ Page({
                 }
               })
               wx.cloud.callFunction({
-                name: 'UpdateUserRelationship',
+                name: 'UpdateDatabase',
                 data: {
                   collection: 'StudentInfo',
                   place: {
@@ -747,7 +747,7 @@ Page({
         console.log(res)
       })
     }
-    else if (post != '教务处') {
+    else if (identity == 'teacher' && post != '教务处') {
       var where1 = { manage_teacher: getApp().globalData.openid }
       var field1 = { _id: true, group_name: true }
       query('Groups', where1, field1).then(res => {
@@ -820,7 +820,7 @@ Page({
         console.log(res)
       })
     }
-    else {
+    else if (identity == 'teacher'){
       var where3 = { status: 'waiting2' }
       var field3 = {
         activity_group: true,
@@ -900,7 +900,7 @@ Page({
       this.setData({
         classroom_multi: true,
         classroom_multi_array: this.data.classroom_choice[e.detail.value[0]][e.detail.value[1]][0],
-        classroom_multi_index: [0,0],
+        classroom_multi_index: [0, 0],
         classroom_value: this.data.classroom_choice[e.detail.value[0]][e.detail.value[1]][0][1][0]
       })
     }

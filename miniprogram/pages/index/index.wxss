@@ -212,9 +212,10 @@ Page {
 }
 
 .todos-title {
+  padding-left: 10px;
   z-index: 1000;
   width: 100%;
-  background-color: var(--weui-BG-2);
+  background-color: var(--weui-BG-1);
   color: var(--weui-FG-0);
   font-weight: 70px;
   height: 40px;
@@ -223,7 +224,6 @@ Page {
   display: flex;
   text-indent: 10px;
   text-align: left;
-  border-top: medium solid var(--weui-FG-3);
 }
 
 .arrow-hide {
@@ -236,6 +236,15 @@ Page {
   transform: rotate(90deg);
   transition: transform 0.3s;
   transform-origin: 75% 50%;
+}
+
+.todos-bound {
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  border-radius: 20px;
+  overflow: hidden;
 }
 
 .todos-box {
@@ -269,6 +278,7 @@ Page {
 
 .todos-no {
   color: var(--weui-FG-1);
+  background: var(--weui-BG-2);
   text-align: center;
   line-height: 100px;
   transition: height .3s ease;

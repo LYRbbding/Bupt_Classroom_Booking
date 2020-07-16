@@ -24,9 +24,24 @@ Page {
 .form-item {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: space-between;
+  justify-content: center;
   text-align: left;
   line-height: 36px;
+  flex-shrink: 0;
+}
+
+.form-PCitem-title {
+  width: 10%;
+}
+
+.form-PCitem-content {
+  width: 23.3%;
+  color: var(--weui-FG-1);
+}
+
+.form-PCitemL-content {
+  width: 90%;
+  color: var(--weui-FG-1);
 }
 
 .form-item-title {

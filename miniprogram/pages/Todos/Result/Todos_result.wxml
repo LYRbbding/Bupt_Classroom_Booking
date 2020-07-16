@@ -16,50 +16,94 @@
       {{status=='accept'?'通过审核':(status=='finish'?'活动已完成':(status=='reject'?'未通过审核':(status=='waiting'?'等待团体老师审核':'等待学校审核')))}}
     </view>
     <view class="weui-msg__desc">
-      <view class="form-item">
-        <view class="form-item-title">校区</view>
-        <view class="form-item-content">{{school}}</view>
-      </view>
-      <view class="form-item">
-        <view class="form-item-title">教室类型</view>
-        <view class="form-item-content">{{type}}（{{volume}}）</view>
-      </view>
-      <view class="form-item">
-        <view class="form-item-title">多媒体</view>
-        <view class="form-item-content">{{multimedia=='是'?'使用多媒体':'不使用多媒体'}}</view>
-      </view>
-      <view class="form-item">
-        <view class="form-item-title">日期</view>
-        <view class="form-item-content">{{dateS}} 至 {{dateE}}</view>
-      </view>
-      <view class="form-item">
-        <view class="form-item-title">周次星期</view>
-        <view class="form-item-content">{{dayS}} 至 {{dayE}}</view>
-      </view>
-      <view class="form-item">
-        <view class="form-item-title">节次</view>
-        <view class="form-item-content">{{sectionS}} 至 {{sectionE}}</view>
-      </view>
-      <view class="form-item">
-        <view class="form-item-title">活动主题</view>
-        <view class="form-item-content">{{name}}</view>
-      </view>
-      <view class="form-item">
-        <view class="form-item-title">备注</view>
-        <view class="form-item-content">{{remarks==''?'无':remarks}}</view>
-      </view>
-      <view class="form-item">
-        <view class="form-item-title">申请团体</view>
-        <view class="form-item-content">{{group}}</view>
-      </view>
-      <view class="form-item">
-        <view class="form-item-title">申请人</view>
-        <view class="form-item-content">{{person}} {{uid}}</view>
-      </view>
-      <view class="form-item">
-        <view class="form-item-title">联系方式</view>
-        <view class="form-item-content">{{phone}}</view>
-      </view>
+      <block wx:if="{{!PCmode}}">
+        <view class="form-item">
+          <view class="form-item-title">校区</view>
+          <view class="form-item-content">{{school}}</view>
+        </view>
+        <view class="form-item">
+          <view class="form-item-title">教室类型</view>
+          <view class="form-item-content">{{type}}（{{volume}}）</view>
+        </view>
+        <view class="form-item">
+          <view class="form-item-title">多媒体</view>
+          <view class="form-item-content">{{multimedia=='是'?'使用多媒体':'不使用多媒体'}}</view>
+        </view>
+        <view class="form-item">
+          <view class="form-item-title">日期</view>
+          <view class="form-item-content">{{dateS}} 至 {{dateE}}</view>
+        </view>
+        <view class="form-item">
+          <view class="form-item-title">周次星期</view>
+          <view class="form-item-content">{{dayS}} 至 {{dayE}}</view>
+        </view>
+        <view class="form-item">
+          <view class="form-item-title">节次</view>
+          <view class="form-item-content">{{sectionS}} 至 {{sectionE}}</view>
+        </view>
+        <view class="form-item">
+          <view class="form-item-title">活动主题</view>
+          <view class="form-item-content">{{name}}</view>
+        </view>
+        <view class="form-item">
+          <view class="form-item-title">备注</view>
+          <view class="form-item-content">{{remarks==''?'无':remarks}}</view>
+        </view>
+        <view class="form-item">
+          <view class="form-item-title">申请团体</view>
+          <view class="form-item-content">{{group}}</view>
+        </view>
+        <view class="form-item">
+          <view class="form-item-title">申请人</view>
+          <view class="form-item-content">{{person}} {{uid}}</view>
+        </view>
+        <view class="form-item">
+          <view class="form-item-title">联系方式</view>
+          <view class="form-item-content">{{phone}}</view>
+        </view>
+        <view class="form-item" wx:if="{{status == 'reject' && reason != ''}}">
+          <view class="form-item-title">未通过原因</view>
+          <view class="form-item-content">{{reason}}</view>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="form-item">
+          <view class="form-PCitem-title">校区</view>
+          <view class="form-PCitem-content">{{school}}</view>
+          <view class="form-PCitem-title">教室类型</view>
+          <view class="form-PCitem-content">{{type}}（{{volume}}）</view>
+          <view class="form-PCitem-title">多媒体</view>
+          <view class="form-PCitem-content">{{multimedia=='是'?'使用多媒体':'不使用多媒体'}}</view>
+        </view>
+        <view class="form-item">
+          <view class="form-PCitem-title">日期</view>
+          <view class="form-PCitem-content">{{dateS}} 至 {{dateE}}</view>
+          <view class="form-PCitem-title">周次星期</view>
+          <view class="form-PCitem-content">{{dayS}} 至 {{dayE}}</view>
+          <view class="form-PCitem-title">节次</view>
+          <view class="form-PCitem-content">{{sectionS}} 至 {{sectionE}}</view>
+        </view>
+        <view class="form-item">
+          <view class="form-PCitem-title">申请团体</view>
+          <view class="form-PCitem-content">{{group}}</view>
+          <view class="form-PCitem-title">申请人</view>
+          <view class="form-PCitem-content">{{person}} {{uid}}</view>
+          <view class="form-PCitem-title">联系方式</view>
+          <view class="form-PCitem-content">{{phone}}</view>
+        </view>
+        <view class="form-item">
+          <view class="form-PCitem-title">活动主题</view>
+          <view class="form-PCitemL-content">{{name}}</view>
+        </view>
+        <view class="form-item">
+          <view class="form-PCitem-title">备注</view>
+          <view class="form-PCitemL-content">{{remarks==''?'无':remarks}}</view>
+        </view>
+        <view class="form-item" wx:if="{{status == 'reject' && reason != ''}}">
+          <view class="form-PCitem-title">未通过原因</view>
+          <view class="form-PCitemL-content">{{reason}}</view>
+        </view>
+      </block>
     </view>
   </view>
   <view class="weui-msg__opr-area">
@@ -75,8 +119,10 @@
           </mp-cell>
         </mp-cells>
       </mp-form>
-      <button wx:if="{{showChange&&status!='finish'}}" class="weui-btn" plain="{{true}}"
-        type="{{status=='accept'?'primary':'warn'}}" bindtap="change">{{status=='accept'?'标记为已完成':'删除该申请'}}</button>
+      <button wx:if="{{showChange&&status=='accept'}}" class="weui-btn" plain="{{true}}" type="primary" bindtap="change"
+        id="finish">标记为已完成</button>
+      <button wx:if="{{showChange&&status!='finish'}}" class="weui-btn" plain="{{true}}" type="warn" bindtap="change"
+        id="obsolete">删除该申请</button>
     </view>
   </view>
 </view>
